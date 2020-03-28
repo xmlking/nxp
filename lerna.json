@@ -1,0 +1,33 @@
+{
+  "lerna": "3.20.2",
+  "npmClient": "yarn",
+  "version": "independent",
+  "packages": ["libs/*", "apps/*"],
+  "useWorkspaces": true,
+  "ignoreChanges": [
+    "**/*.e2e.ts",
+    "**/*.md",
+    "**/*.spec.ts",
+    "**/jest.config.js",
+    "**/ng-package.json",
+    "**/package.json",
+    "**/scripts/**",
+    "**/stencil.*.config.ts",
+    "**/test-setup.ts",
+    "**/test/**",
+    "**/tsconfig.*.json",
+    "**/tsconfig.json",
+    "**/tslint.json"
+  ],
+  "command": {
+    "clean": {
+      "yes": true
+    },
+    "version": {
+      "conventionalCommits": true,
+      "allowBranch": ["master", "version"],
+      "message": "chore(release): %s",
+      "push": false
+    }
+  }
+}

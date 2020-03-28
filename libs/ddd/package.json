@@ -1,7 +1,31 @@
 {
   "name": "@nx-plugins/ddd",
-  "version": "0.0.1",
+  "version": "0.0.0",
+  "license": "MIT",
+  "author": "Sumanth Chinthagunta <xmlking+github@gmail.com>",
+  "description": "Nx plugin for structuring a monorepo with domains and layers",
+  "repository": {
+    "type": "github",
+    "url": "ssh://git@github.com:xmlking/nx-plugins.git",
+    "directory": "libs/ddd"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://npm.pkg.github.com/",
+    "directory": "dist/ddd"
+   },
   "main": "src/index.js",
   "schematics": "./collection.json",
-  "builders": "./builders.json"
+  "builders": "./builders.json",
+  "keywords": [
+    "ddd",
+    "domain driven development",
+    "domain-driven-development",
+    "terraform",
+    "schematics",
+    "yeti",
+    "nx",
+    "angular",
+    "nestjs"
+  ]
 }

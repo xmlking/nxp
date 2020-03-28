@@ -1,0 +1,7 @@
+{
+  "name": "@nx-plugins/ddd",
+  "version": "0.0.1",
+  "main": "src/index.js",
+  "schematics": "./collection.json",
+  "builders": "./builders.json"
+}

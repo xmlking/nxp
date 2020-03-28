@@ -1,0 +1,22 @@
+{
+  "npmScope": "nx-plugins",
+  "implicitDependencies": {
+    "workspace.json": "*",
+    "package.json": {
+      "dependencies": "*",
+      "devDependencies": "*"
+    },
+    "tsconfig.json": "*",
+    "tslint.json": "*",
+    "nx.json": "*"
+  },
+  "projects": {
+    "ddd": {
+      "tags": []
+    },
+    "ddd-e2e": {
+      "tags": [],
+      "implicitDependencies": ["ddd"]
+    }
+  }
+}

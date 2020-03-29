@@ -13,7 +13,7 @@
   "publishConfig": {
     "access": "public",
     "registry": "https://npm.pkg.github.com/",
-    "directory": "../../dist/ddd"
+    "directory": "../../dist/libs/ddd"
   },
   "main": "src/index.js",
   "schematics": "./collection.json",

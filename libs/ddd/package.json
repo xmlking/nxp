@@ -30,9 +30,6 @@
     "nestjs"
   ],
   "scripts": {
-    "// - DDD": "ddd lib commands",
-    "build": "nx build ddd",
-    "pack": "npm pack ./dist/libs/ddd",
-    "build:schema": "node libs/ddd/src/schematics/json-schema-to-ts.js"
+    "build": "echo test..."
   }
 }

@@ -31,10 +31,13 @@
     "// - EXTRA": "Extra commands",
     "dev": "lerna run dev",
     "ci": "yarn install",
-    "postinstall": "lerna run build",
     "version:next": "lerna version --conventional-prerelease=\"@xmlking/nxp-{ddd}\" --no-push --preid next",
     "publish:git:gpr": "lerna publish from-git --yes --registry https://npm.pkg.github.com",
-    "publish:pkg:gpr": "lerna publish from-package --yes --registry https://npm.pkg.github.com"
+    "publish:pkg:gpr": "lerna publish from-package --yes --registry https://npm.pkg.github.com",
+    "// - DDD": "ddd lib commands",
+    "build:ddd": "nx build ddd",
+    "pack:ddd": "npm pack ./dist/libs/ddd",
+    "build:schema": "node libs/ddd/src/schematics/json-schema-to-ts.js"
   },
   "private": true,
   "dependencies": {

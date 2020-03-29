@@ -25,12 +25,12 @@
     },
     "publish": {
       "conventionalCommits": true,
-      "message": "chore(release): release"
+      "message": "chore(release): publish"
     },
     "version": {
       "conventionalCommits": true,
       "allowBranch": ["master", "version"],
-      "message": "chore(release): %s",
+      "message": "chore(release): release %s",
       "push": false
     }
   }

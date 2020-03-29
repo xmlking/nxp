@@ -76,7 +76,7 @@ export default function(options: DddSchematicSchema): Rule {
         })
         .targets.add({
           name: 'build',
-          builder: '@nx-plugins/ddd:build'
+          builder: '@xmlking/nxp-ddd:build'
         });
     }),
     addProjectToNxJsonInTree(normalizedOptions.projectName, {

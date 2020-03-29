@@ -1,7 +1,11 @@
 {
-  "name": "nx-plugins",
+  "name": "nxp",
   "version": "0.0.0",
   "license": "MIT",
+  "workspaces": [
+    "libs/*",
+    "apps/*"
+  ],
   "scripts": {
     "nx": "nx",
     "start": "nx serve",
@@ -23,10 +27,20 @@
     "update": "nx migrate latest",
     "workspace-schematic": "nx workspace-schematic",
     "dep-graph": "nx dep-graph",
-    "help": "nx help"
+    "help": "nx help",
+    "// - EXTRA": "Extra commands",
+    "dev": "lerna run dev",
+    "ci": "yarn install",
+    "postinstall": "lerna run build",
+    "version:next": "lerna version --conventional-prerelease=\"@xmlking/nxp-{ddd}\" --no-push --preid next",
+    "publish:git:gpr": "lerna publish from-git --yes --registry https://npm.pkg.github.com",
+    "publish:pkg:gpr": "lerna publish from-package --yes --registry https://npm.pkg.github.com"
   },
   "private": true,
-  "dependencies": {},
+  "dependencies": {
+    "@schematics/angular": "9.1.0",
+    "json-schema-to-typescript": "^8.2.0"
+  },
   "devDependencies": {
     "@nrwl/eslint-plugin-nx": "9.1.4",
     "@nrwl/jest": "9.1.4",

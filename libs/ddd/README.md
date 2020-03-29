@@ -1,4 +1,4 @@
-# @nx-plugins/ddd
+# @xmlking/nxp-ddd
 
 This library was generated with [Nx](https://nx.dev).
 

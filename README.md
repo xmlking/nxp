@@ -1,12 +1,12 @@
-# NxPlugins
+# Nx Plugins (nxp)
 
 Plugins for [Nx](https://nx.dev).
 
-**@nx-plugins/ddd** - Nx plugin for structuring a monorepo with domains and layers
+**@xmlking/nxp-ddd** - Nx plugin for structuring a monorepo with domains and layers
 
 ## Build Status
 
-![check](https://github.com/xmlking/nx-plugins/workflows/check/badge.svg)
+![check](https://github.com/xmlking/nxp/workflows/check/badge.svg)
 
 ## For Contributors
 
@@ -14,7 +14,7 @@ Plugins for [Nx](https://nx.dev).
 
 ```bash
 # scaffolding empty project
-yarn create nx-plugin nx-plugins --pluginName ddd
+yarn create nx-plugin nxp --pluginName ddd
 lerna init --independent
 # adding new plugin
 nx g @nrwl/nx-plugin:plugin [pluginName]
@@ -49,3 +49,4 @@ lerna publish from-package # explicitly publish packages where the latest versio
 
 - <https://nx.dev/angular/guides/nx-plugin>
 - <https://github.com/lerna/lerna>
+- <https://github.com/bernardocorbella/myweb>

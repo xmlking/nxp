@@ -65,7 +65,7 @@
           "builder": "@nrwl/nx-plugin:e2e",
           "options": {
             "target": "ddd:build",
-            "npmPackageName": "@nx-plugins/ddd",
+            "npmPackageName": "@xmlking/nxp-ddd",
             "pluginOutputPath": "dist/libs/ddd",
             "jestConfig": "apps/ddd-e2e/jest.config.js",
             "tsSpecConfig": "apps/ddd-e2e/tsconfig.spec.json"

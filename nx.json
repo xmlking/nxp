@@ -1,5 +1,5 @@
 {
-  "npmScope": "nx-plugins",
+  "npmScope": "xmlking",
   "implicitDependencies": {
     "workspace.json": "*",
     "package.json": {

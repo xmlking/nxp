@@ -10,7 +10,7 @@ describe('ddd schematic', () => {
   const options: DddSchematicSchema = { name: 'test' };
 
   const testRunner = new SchematicTestRunner(
-    '@nx-plugins/ddd',
+    '@xmlking/nxp-ddd',
     join(__dirname, '../../../collection.json')
   );
 

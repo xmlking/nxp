@@ -23,6 +23,10 @@
     "clean": {
       "yes": true
     },
+    "publish": {
+      "conventionalCommits": true,
+      "message": "chore(release): release"
+    },
     "version": {
       "conventionalCommits": true,
       "allowBranch": ["master", "version"],

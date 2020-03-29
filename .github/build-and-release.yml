@@ -1,0 +1,42 @@
+name: Publish Release
+
+on:
+  push:
+    branches:
+      - next
+      - master
+    tags:
+      - '*'
+
+jobs:
+  build-prerelease:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 13
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@xmlking'
+
+      - name: Cache
+        uses: actions/cache@v1.0.2
+        with:
+          path: node_modules
+          key: ${{ runner.OS }}-build-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.OS }}-build
+      - name: Install
+        run: yarn ci
+
+      - name: Publish gpr from git
+        run: yarn run publish:git:gpr
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish gpr from registry
+        run: yarn publish:pkg:gpr
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

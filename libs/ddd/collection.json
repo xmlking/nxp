@@ -1,12 +1,26 @@
 {
   "$schema": "../../node_modules/@angular-devkit/schematics/collection-schema.json",
-  "name": "ddd",
+  "name": "@xmlking/nxp-ddd",
   "version": "0.0.1",
   "schematics": {
     "ddd": {
       "factory": "./src/schematics/ddd/schematic",
       "schema": "./src/schematics/ddd/schema.json",
       "description": "ddd schematic"
+    },
+    "ng-add": {
+      "factory": "./src/schematics/ng-add/index",
+      "description": "adds initial access restrictions to linting rules"
+    },
+    "domain": {
+      "factory": "./src/schematics/domain/index",
+      "schema": "./src/schematics/domain/schema.json",
+      "description": "adds a domain including a domain folder, domain lib, entries in nx.json, and linting rules in tslint.json"
+    },
+    "feature": {
+      "factory": "./src/schematics/feature/index",
+      "schema": "./src/schematics/feature/schema.json",
+      "description": "adds a feature lib to a domain"
     }
   }
 }

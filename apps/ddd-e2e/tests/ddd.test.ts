@@ -8,8 +8,8 @@ import {
 describe('ddd e2e', () => {
   it('should create ddd', async done => {
     const plugin = uniq('ddd');
-    ensureNxProject('@nx-plugins/ddd', 'dist/libs/ddd');
-    await runNxCommandAsync(`generate @nx-plugins/ddd:ddd ${plugin}`);
+    ensureNxProject('@xmlking/nxp-ddd', 'dist/libs/ddd');
+    await runNxCommandAsync(`generate @xmlking/nxp-ddd:ddd ${plugin}`);
 
     const result = await runNxCommandAsync(`build ${plugin}`);
     expect(result.stdout).toContain('Builder ran');
@@ -20,9 +20,9 @@ describe('ddd e2e', () => {
   describe('--directory', () => {
     it('should create src in the specified directory', async done => {
       const plugin = uniq('ddd');
-      ensureNxProject('@nx-plugins/ddd', 'dist/libs/ddd');
+      ensureNxProject('@xmlking/nxp-ddd', 'dist/libs/ddd');
       await runNxCommandAsync(
-        `generate @nx-plugins/ddd:ddd ${plugin} --directory subdir`
+        `generate @xmlking/nxp-ddd:ddd ${plugin} --directory subdir`
       );
       expect(() =>
         checkFilesExist(`libs/subdir/${plugin}/src/index.ts`)
@@ -34,9 +34,9 @@ describe('ddd e2e', () => {
   describe('--tags', () => {
     it('should add tags to nx.json', async done => {
       const plugin = uniq('ddd');
-      ensureNxProject('@nx-plugins/ddd', 'dist/libs/ddd');
+      ensureNxProject('@xmlking/nxp-ddd', 'dist/libs/ddd');
       await runNxCommandAsync(
-        `generate @nx-plugins/ddd:ddd ${plugin} --tags e2etag,e2ePackage`
+        `generate @xmlking/nxp-ddd:ddd ${plugin} --tags e2etag,e2ePackage`
       );
       const nxJson = readJson('nx.json');
       expect(nxJson.projects[plugin].tags).toEqual(['e2etag', 'e2ePackage']);

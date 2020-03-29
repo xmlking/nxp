@@ -1,5 +1,5 @@
 import { Component, OnInit} from '@angular/core';
-import { <%=classify(name)%>Facade } from '<%=workspaceName%>/<%=dasherize(domain)%>/domain';
+import { <%=classify(name)%>State } from '<%=workspaceName%>/<%=dasherize(domain)%>/domain';
 
 @Component({
   selector: '<%=dasherize(domain)%>-<%=dasherize(name)%>',
@@ -7,21 +7,21 @@ import { <%=classify(name)%>Facade } from '<%=workspaceName%>/<%=dasherize(domai
   styleUrls: ['./<%=dasherize(name)%>.component.scss']
 })
 export class <%=classify(name)%>Component implements OnInit {
-    
-<% if (entity) { %>    
-    <%=camelize(entity)%>List$ = this.<%=camelize(name)%>Facade.<%=camelize(entity)%>List$;
+
+<% if (entity) { %>
+    <%=camelize(entity)%>List$ = this.<%=camelize(name)%>State.<%=camelize(entity)%>List$;
 <% } %>
 
-    constructor(private <%=camelize(name)%>Facade: <%=classify(name)%>Facade) {
+    constructor(private <%=camelize(name)%>State: <%=classify(name)%>State) {
     }
 
-<% if (entity) { %>    
+<% if (entity) { %>
     ngOnInit() {
         this.load();
     }
 
     load(): void {
-        this.<%=camelize(name)%>Facade.load();
+        this.<%=camelize(name)%>State.load();
     }
 <% } else { %>
     ngOnInit() {

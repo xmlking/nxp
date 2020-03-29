@@ -25,10 +25,9 @@
       "default": false
     },
     "platform": {
-      "description": "Select runtime platform",
+      "description": "runtime platform",
       "alias": "p",
       "type": "string",
-      // "default": "web",
       "enum": ["web", "mobile", "desktop", "node", "universal"],
       "x-prompt": "Which platform this module is targeted for?"
     },

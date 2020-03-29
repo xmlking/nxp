@@ -4,7 +4,7 @@ import {Observable, of} from 'rxjs';
 import {<%=classify(entity)%>} from '../entities/<%=dasherize(entity)%>';
 
 @Injectable({ providedIn: 'root' })
-export class <%=classify(entity)%>DataService {
+export class <%=classify(entity)%>Service {
 
     constructor(private http: HttpClient) {
     }
@@ -18,7 +18,7 @@ export class <%=classify(entity)%>DataService {
         const headers = new HttpHeaders().set('Accept', 'application/json');
         return this.http.get<<%=classify(entity)%>[]>(url, {params, headers});
         */
-        
+
         return of([
             {id: 1, name: 'Lorem ipsum', description: 'Lorem ipsum dolor sit amet'},
             {id: 2, name: 'At vero eos', description: 'At vero eos et accusam et justo duo dolores'},

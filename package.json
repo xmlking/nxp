@@ -29,8 +29,6 @@
     "dep-graph": "nx dep-graph",
     "help": "nx help",
     "// - EXTRA": "Extra commands",
-    "dev": "lerna run dev",
-    "ci": "yarn install",
     "version:next": "lerna version --conventional-prerelease=\"@xmlking/nxp-{ddd}\" --no-push --preid next",
     "publish:git:gpr": "lerna publish from-git --yes --registry https://npm.pkg.github.com",
     "publish:pkg:gpr": "lerna publish from-package --yes --registry https://npm.pkg.github.com",

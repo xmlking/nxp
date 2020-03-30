@@ -15,10 +15,11 @@ ng add /Users/schintha/Developer/Work/SPA/nxp/dist/libs/ddd
 # generate domain. options: --platform <web/mobile/desktop/node>  --app <appName> --lazy <default=true>
 nx g @xmlking/nxp-ddd:domain booking
 nx g @xmlking/nxp-ddd:domain booking  --platform web  --app yeti-web-app
-# generate feature module. options: --platform <web/mobile/desktop/node> --lazy <default=true>
+# generate feature module. options: --platform <web/mobile/desktop/node> --lazy <default=true> --entity <entity>
 nx g @xmlking/nxp-ddd:feature search --domain booking
 nx g @xmlking/nxp-ddd:feature search --domain booking --platform web --lazy=false
 nx g @xmlking/nxp-ddd:feature search --domain booking --platform web --lazy
+nx g @xmlking/nxp-ddd:feature search --domain booking --platform web --entity flight
 
 # generate entity.
 nx g @xmlking/nxp-ddd:entity flight --domain booking

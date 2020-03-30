@@ -22,5 +22,9 @@ export interface FeatureOptions {
    * runtime platform
    */
   platform?: "web" | "mobile" | "desktop" | "node" | "universal";
+  /**
+   * Optional entity to create for this feature
+   */
+  entity?: string;
   [k: string]: any;
 }

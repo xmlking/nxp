@@ -1,5 +1,12 @@
 import { normalize, strings } from '@angular-devkit/core';
-import { apply, chain, externalSchematic, move, Rule, SchematicContext, template, Tree, url } from '@angular-devkit/schematics';
+import {
+  chain,
+  externalSchematic,
+  Rule,
+  SchematicContext,
+  SchematicsException,
+  Tree
+} from '@angular-devkit/schematics';
 import { getWorkspace } from '@schematics/angular/utility/config';
 import { addDomainToLintingRules } from '../utils/update-linting-rules';
 import { DomainOptions } from './schema';
@@ -9,11 +16,6 @@ export default function(options: DomainOptions): Rule {
     const domainName = strings.dasherize(options.name);
     const domainFolderName = domainName;
     const domainPath = `libs/${domainFolderName}/domain/src/lib`;
-
-    const templateSource = apply(url('./files'), [
-      template({}),
-      move(domainPath)
-    ]);
 
     function createEmptyFolders(options: DomainOptions): Rule {
       return (tree: Tree, _: SchematicContext) => {
@@ -29,13 +31,10 @@ export default function(options: DomainOptions): Rule {
     const appFolderName = strings.dasherize(appName);
     const appModulePath = `apps/${appFolderName}/src/app/app.module.ts`;
 
-    if (options.app) {
-      const requiredAppModulePath = `apps/${appFolderName}/src/app/app.module.ts`;
-      if (!host.exists(requiredAppModulePath)) {
-        throw new Error(
-          `Specified app ${options.app} does not exist: ${requiredAppModulePath} expected!`
-        );
-      }
+    if (!host.exists(appModulePath)) {
+      throw new SchematicsException(
+        `Specified app ${options.app} does not exist: ${appModulePath} expected!`
+      );
     }
 
     return chain([
@@ -58,7 +57,6 @@ export default function(options: DomainOptions): Rule {
       }),
       addDomainToLintingRules(options.name),
       createEmptyFolders(options)
-      //mergeWith(templateSource)
     ]);
   };
 }

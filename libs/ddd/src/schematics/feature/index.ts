@@ -1,27 +1,18 @@
-import { strings } from '@angular-devkit/core';
+import { normalize, strings } from '@angular-devkit/core';
 import {
-  apply,
   chain,
   externalSchematic,
-  mergeWith,
-  move,
+  noop,
   Rule,
-  template,
-  Tree,
-  url
+  schematic,
+  SchematicContext,
+  SchematicsException,
+  Tree
 } from '@angular-devkit/schematics';
 import { FeatureOptions } from './schema';
 
-function readWorkspaceName(host: Tree): string {
-  const content = host.read('nx.json').toString();
-  const config = JSON.parse(content);
-  return '@' + config['npmScope'];
-}
-
 export default function(options: FeatureOptions): Rule {
   return (host: Tree) => {
-    const workspaceName = readWorkspaceName(host);
-
     const domainName = strings.dasherize(options.domain);
     const domainFolderName = domainName;
 
@@ -36,15 +27,19 @@ export default function(options: FeatureOptions): Rule {
     const featurePath = `libs/${domainFolderName}/${featureFolderName}/src/lib`;
 
     if (!host.exists(shellModulePath)) {
-      throw new Error(
+      throw new SchematicsException(
         `Specified domain: ${options.domain} does not exist: ${shellModulePath} expected!`
       );
     }
 
-    const templateSource = apply(url('./files'), [
-      template({ ...strings, ...options, workspaceName }),
-      move(featurePath)
-    ]);
+    function createEmptyFolders(options: FeatureOptions): Rule {
+      return (tree: Tree, _: SchematicContext) => {
+        tree.create(normalize(`${featurePath}/components/.gitkeep`), '');
+        tree.create(normalize(`${featurePath}/containers/.gitkeep`), '');
+
+        return tree;
+      };
+    }
 
     return chain([
       externalSchematic('@nrwl/angular', 'lib', {
@@ -67,7 +62,13 @@ export default function(options: FeatureOptions): Rule {
         )}`,
         prefix: options.domain
       }),
-      mergeWith(templateSource)
+      options.entity
+        ? schematic('entity', {
+            name: options.entity,
+            domain: options.domain
+          })
+        : noop(),
+      createEmptyFolders(options)
     ]);
   };
 }

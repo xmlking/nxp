@@ -26,10 +26,6 @@
       "type": "string",
       "enum": ["web", "mobile", "desktop", "node", "universal"],
       "default": "web"
-    },
-    "entity": {
-      "type": "string",
-      "description": "Optional entity to create for this feature"
     }
   },
   "required": ["name", "domain"]

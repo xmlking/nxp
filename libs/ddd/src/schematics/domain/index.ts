@@ -1,27 +1,29 @@
-import { strings } from '@angular-devkit/core';
-import {
-  apply,
-  chain,
-  externalSchematic,
-  mergeWith,
-  move,
-  Rule,
-  template,
-  Tree,
-  url
-} from '@angular-devkit/schematics';
+import { normalize, strings } from '@angular-devkit/core';
+import { apply, chain, externalSchematic, move, Rule, SchematicContext, template, Tree, url } from '@angular-devkit/schematics';
 import { getWorkspace } from '@schematics/angular/utility/config';
 import { addDomainToLintingRules } from '../utils/update-linting-rules';
 import { DomainOptions } from './schema';
 
 export default function(options: DomainOptions): Rule {
   return (host: Tree) => {
-    const libFolder = strings.dasherize(options.name);
+    const domainName = strings.dasherize(options.name);
+    const domainFolderName = domainName;
+    const domainPath = `libs/${domainFolderName}/domain/src/lib`;
 
     const templateSource = apply(url('./files'), [
       template({}),
-      move(`libs/${libFolder}/domain/src/lib`)
+      move(domainPath)
     ]);
+
+    function createEmptyFolders(options: DomainOptions): Rule {
+      return (tree: Tree, _: SchematicContext) => {
+        tree.create(normalize(`${domainPath}/entities/.gitkeep`), '');
+        tree.create(normalize(`${domainPath}/services/.gitkeep`), '');
+        tree.create(normalize(`${domainPath}/state/.gitkeep`), '');
+
+        return tree;
+      };
+    }
 
     const appName = options.app ?? getWorkspace(host)?.defaultProject;
     const appFolderName = strings.dasherize(appName);
@@ -55,7 +57,8 @@ export default function(options: DomainOptions): Rule {
         prefix: options.name
       }),
       addDomainToLintingRules(options.name),
-      mergeWith(templateSource)
+      createEmptyFolders(options)
+      //mergeWith(templateSource)
     ]);
   };
 }

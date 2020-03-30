@@ -1,4 +1,4 @@
-export interface <%=classify(entity)%> {
+export interface <%=classify(name)%> {
     id: number;
     name: string;
     description: string;

@@ -3,140 +3,14 @@ import {
   apply,
   chain,
   externalSchematic,
-  filter,
   mergeWith,
   move,
-  noop,
   Rule,
-  SchematicsException,
   template,
   Tree,
   url
 } from '@angular-devkit/schematics';
-import * as ts from '@schematics/angular/third_party/github.com/Microsoft/TypeScript/lib/typescript';
-import {
-  addDeclarationToModule,
-  addExportToModule,
-  addImportToModule
-} from '@schematics/angular/utility/ast-utils';
-import { InsertChange } from '@schematics/angular/utility/change';
 import { FeatureOptions } from './schema';
-
-// import * as ts from 'typescript';
-
-// Taken from @schematics/angular
-function readIntoSourceFile(host: Tree, modulePath: string): ts.SourceFile {
-  const text = host.read(modulePath);
-  if (text === null) {
-    throw new SchematicsException(`File ${modulePath} does not exist.`);
-  }
-  const sourceText = text.toString('utf-8');
-
-  return ts.createSourceFile(
-    modulePath,
-    sourceText,
-    ts.ScriptTarget.Latest,
-    true
-  );
-}
-
-function addImport(
-  modulePath: string,
-  ngModuleToImportPath: string,
-  ngModuleToImportName: string,
-  optional = false
-): Rule {
-  return (host: Tree) => {
-    if (optional && !host.exists(modulePath)) {
-      return;
-    }
-
-    const source = readIntoSourceFile(host, modulePath);
-
-    const changes = addImportToModule(
-      source,
-      modulePath,
-      ngModuleToImportName,
-      ngModuleToImportPath
-    );
-
-    const declarationRecorder = host.beginUpdate(modulePath);
-    for (const change of changes) {
-      if (change instanceof InsertChange) {
-        declarationRecorder.insertLeft(change.pos, change.toAdd);
-      }
-    }
-    host.commitUpdate(declarationRecorder);
-  };
-}
-
-function addDeclaration(
-  modulePath: string,
-  componentToImportPath: string,
-  componentToImportName: string
-): Rule {
-  return (host: Tree) => {
-    const source = readIntoSourceFile(host, modulePath);
-
-    const changes = addDeclarationToModule(
-      source,
-      modulePath,
-      componentToImportName,
-      componentToImportPath
-    );
-
-    const declarationRecorder = host.beginUpdate(modulePath);
-    for (const change of changes) {
-      if (change instanceof InsertChange) {
-        declarationRecorder.insertLeft(change.pos, change.toAdd);
-      }
-    }
-    host.commitUpdate(declarationRecorder);
-  };
-}
-
-function addExport(
-  modulePath: string,
-  componentToImportPath: string,
-  componentToImportName: string
-): Rule {
-  return (host: Tree) => {
-    const source = readIntoSourceFile(host, modulePath);
-
-    const changes = addExportToModule(
-      source,
-      modulePath,
-      componentToImportName,
-      componentToImportPath
-    );
-
-    const declarationRecorder = host.beginUpdate(modulePath);
-    for (const change of changes) {
-      if (change instanceof InsertChange) {
-        declarationRecorder.insertLeft(change.pos, change.toAdd);
-      }
-    }
-    host.commitUpdate(declarationRecorder);
-  };
-}
-
-function addTsExport(filePath: string, filesToExport: string[]): Rule {
-  return (host: Tree) => {
-    let content = host.read(filePath) + '\n';
-
-    for (const file of filesToExport) {
-      content += `export * from '${file}';\n`;
-    }
-
-    host.overwrite(filePath, content);
-  };
-}
-
-function filterTemplates(options: FeatureOptions): Rule {
-  return options.entity
-    ? filter(path => !!path.match(/\.state\.ts$/))
-    : filter(_ => true);
-}
 
 function readWorkspaceName(host: Tree): string {
   const content = host.read('nx.json').toString();
@@ -150,33 +24,16 @@ export default function(options: FeatureOptions): Rule {
 
     const domainName = strings.dasherize(options.domain);
     const domainFolderName = domainName;
-    const domainPath = `libs/${domainFolderName}/domain/src/lib`;
-    const domainModulePath = `${domainPath}/${domainFolderName}-domain.module.ts`;
-    const domainModuleClassName =
-      strings.classify(options.domain) + 'DomainModule';
-    const domainImportPath = `${workspaceName}/${domainFolderName}/domain`;
-    const domainIndexPath = `libs/${domainFolderName}/domain/src/index.ts`;
 
-    const shellFolderName = 'shell-' + options.platform;
+    const shellFolderName = `shell-${options.platform}`;
     const shellPath = `libs/${domainFolderName}/${shellFolderName}/src/lib`;
     const shellModulePath = `${shellPath}/${domainName}-${shellFolderName}.module.ts`;
 
     const featureName = strings.dasherize(options.name);
-    const featureFolderName = 'feature-' + featureName + '-' + options.platform;
+    const featureFolderName = `feature-${strings.dasherize(featureName)}-${
+      options.platform
+    }`;
     const featurePath = `libs/${domainFolderName}/${featureFolderName}/src/lib`;
-    const featureModulePath = `${featurePath}/${featureFolderName}.module.ts`;
-    const featureModuleClassName = strings.classify(
-      `${options.domain}-${featureFolderName}Module`
-    );
-    const featureImportPath = `${workspaceName}/${domainFolderName}/${featureFolderName}`;
-    const featureIndexPath = `libs/${domainFolderName}/${featureFolderName}/src/index.ts`;
-
-    const entityName = options.entity ? strings.dasherize(options.entity) : '';
-
-    const featureComponentImportPath = `./containers/${featureName}/${featureName}.component`;
-    const featureComponentClassName = strings.classify(
-      `${featureName}Component`
-    );
 
     if (!host.exists(shellModulePath)) {
       throw new Error(
@@ -184,53 +41,33 @@ export default function(options: FeatureOptions): Rule {
       );
     }
 
-    const domainTemplates = apply(url('./files/forDomain'), [
-      filterTemplates(options),
-      template({ ...strings, ...options, workspaceName }),
-      move(domainPath)
-    ]);
-
-    const featureTemplates = apply(url('./files/forFeature'), [
+    const templateSource = apply(url('./files'), [
       template({ ...strings, ...options, workspaceName }),
       move(featurePath)
     ]);
 
-    console.log(options);
     return chain([
       externalSchematic('@nrwl/angular', 'lib', {
-        name: `feature-${options.name}-${options.platform}`,
+        name: featureFolderName,
         directory: options.domain,
         tags: `domain:${options.domain},type:feature,platform:${options.platform}`,
-        simpleModuleName: true,
         routing: true,
         lazy: options.lazy,
         parentModule: shellModulePath,
         style: 'scss',
         prefix: options.domain
       }),
-      addImport(featureModulePath, domainImportPath, domainModuleClassName),
-      mergeWith(domainTemplates), // FIXME
-      options.entity
-        ? addTsExport(domainIndexPath, [
-            `./lib/entities/${entityName}`,
-            `./lib/services/${entityName}.service`,
-            `./lib/state/${entityName}.state`
-          ])
-        : noop(),
-      mergeWith(featureTemplates),
-      addTsExport(featureIndexPath, [
-        `./lib/containers/${featureName}/${featureName}.component`
-      ]),
-      addDeclaration(
-        featureModulePath,
-        featureComponentImportPath,
-        featureComponentClassName
-      ),
-      addExport(
-        featureModulePath,
-        featureComponentImportPath,
-        featureComponentClassName
-      )
+      externalSchematic('@schematics/angular', 'component', {
+        name: options.name,
+        project: `${options.domain}-${featureFolderName}`,
+        flat: true,
+        style: 'scss',
+        selector: `${strings.dasherize(options.domain)}-${strings.dasherize(
+          options.name
+        )}`,
+        prefix: options.domain
+      }),
+      mergeWith(templateSource)
     ]);
   };
 }

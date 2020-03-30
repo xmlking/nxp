@@ -5,22 +5,14 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-export interface FeatureOptions {
+export interface EntityOptions {
   /**
-   * Library name
+   * Entity name
    */
   name: string;
   /**
    * Domain name
    */
   domain: string;
-  /**
-   * Is this feature module lazy loaded?
-   */
-  lazy?: boolean;
-  /**
-   * runtime platform
-   */
-  platform?: "web" | "mobile" | "desktop" | "node" | "universal";
   [k: string]: any;
 }

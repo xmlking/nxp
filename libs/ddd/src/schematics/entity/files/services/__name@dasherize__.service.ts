@@ -1,22 +1,22 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Observable, of} from 'rxjs';
-import {<%=classify(entity)%>} from '../entities/<%=dasherize(entity)%>';
+import {<%=classify(name)%>} from '../entities/<%=dasherize(name)%>.interface';
 
 @Injectable({ providedIn: 'root' })
-export class <%=classify(entity)%>Service {
+export class <%=classify(name)%>Service {
 
     constructor(private http: HttpClient) {
     }
 
-    load(): Observable<<%=classify(entity)%>[]> {
+    load(): Observable<<%=classify(name)%>[]> {
 
         // Uncomment if needed
         /*
         const url = '...';
         const params = new HttpParams().set('param', 'value');
         const headers = new HttpHeaders().set('Accept', 'application/json');
-        return this.http.get<<%=classify(entity)%>[]>(url, {params, headers});
+        return this.http.get<<%=classify(name)%>[]>(url, {params, headers});
         */
 
         return of([

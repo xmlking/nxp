@@ -12,3 +12,9 @@ toTypeScript
   .then(ts =>
     fs.writeFileSync('libs/ddd/src/schematics/feature/schema.d.ts', ts)
   );
+
+toTypeScript
+  .compileFromFile('libs/ddd/src/schematics/entity/schema.json')
+  .then(ts =>
+    fs.writeFileSync('libs/ddd/src/schematics/entity/schema.d.ts', ts)
+  );

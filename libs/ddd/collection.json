@@ -10,12 +10,17 @@
     "domain": {
       "factory": "./src/schematics/domain/index",
       "schema": "./src/schematics/domain/schema.json",
-      "description": "adds a domain including a domain folder, domain lib, entries in nx.json, and linting rules in tslint.json"
+      "description": "adds a domain including a domain folder, domain module, domain shell module, entries in nx.json, and linting rules in tslint.json"
     },
     "feature": {
       "factory": "./src/schematics/feature/index",
       "schema": "./src/schematics/feature/schema.json",
       "description": "adds a feature lib to a domain"
+    },
+    "entity": {
+      "factory": "./src/schematics/entity/index",
+      "schema": "./src/schematics/entity/schema.json",
+      "description": "adds entity to a domain"
     }
   }
 }

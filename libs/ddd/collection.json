@@ -3,11 +3,6 @@
   "name": "@xmlking/nxp-ddd",
   "version": "0.0.1",
   "schematics": {
-    "ddd": {
-      "factory": "./src/schematics/ddd/schematic",
-      "schema": "./src/schematics/ddd/schema.json",
-      "description": "ddd schematic"
-    },
     "ng-add": {
       "factory": "./src/schematics/ng-add/index",
       "description": "adds initial access restrictions to linting rules"

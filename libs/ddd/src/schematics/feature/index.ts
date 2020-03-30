@@ -133,10 +133,9 @@ function addTsExport(filePath: string, filesToExport: string[]): Rule {
 }
 
 function filterTemplates(options: FeatureOptions): Rule {
-  if (!options.entity) {
-    return filter(path => !!path.match(/\.state\.ts$/));
-  }
-  return filter(_ => true);
+  return options.entity
+    ? filter(path => !!path.match(/\.state\.ts$/))
+    : filter(_ => true);
 }
 
 function readWorkspaceName(host: Tree): string {
@@ -158,11 +157,14 @@ export default function(options: FeatureOptions): Rule {
     const domainImportPath = `${workspaceName}/${domainFolderName}/domain`;
     const domainIndexPath = `libs/${domainFolderName}/domain/src/index.ts`;
 
+    const shellFolderName = 'shell-' + options.platform;
+    const shellPath = `libs/${domainFolderName}/${shellFolderName}/src/lib`;
+    const shellModulePath = `${shellPath}/${domainName}-${shellFolderName}.module.ts`;
+
     const featureName = strings.dasherize(options.name);
-    const featureFolderName =
-      'feature-' + featureName + options.platform ? '-' + options.platform : '';
+    const featureFolderName = 'feature-' + featureName + '-' + options.platform;
     const featurePath = `libs/${domainFolderName}/${featureFolderName}/src/lib`;
-    const featureModulePath = `${featurePath}/${domainFolderName}-${featureFolderName}.module.ts`;
+    const featureModulePath = `${featurePath}/${featureFolderName}.module.ts`;
     const featureModuleClassName = strings.classify(
       `${options.domain}-${featureFolderName}Module`
     );
@@ -171,22 +173,15 @@ export default function(options: FeatureOptions): Rule {
 
     const entityName = options.entity ? strings.dasherize(options.entity) : '';
 
-    const featureComponentImportPath = `./${featureName}.component`;
+    const featureComponentImportPath = `./containers/${featureName}/${featureName}.component`;
     const featureComponentClassName = strings.classify(
       `${featureName}Component`
     );
 
-    const appName = options.app || options.domain;
-    const appFolderName = strings.dasherize(appName);
-    const appModulePath = `apps/${appFolderName}/src/app/app.module.ts`;
-
-    if (options.app) {
-      const requiredAppModulePath = `apps/${appFolderName}/src/app/app.module.ts`;
-      if (!host.exists(requiredAppModulePath)) {
-        throw new Error(
-          `Specified app ${options.app} does not exist: ${requiredAppModulePath} expected!`
-        );
-      }
+    if (!host.exists(shellModulePath)) {
+      throw new Error(
+        `Specified domain: ${options.domain} does not exist: ${shellModulePath} expected!`
+      );
     }
 
     const domainTemplates = apply(url('./files/forDomain'), [
@@ -200,41 +195,32 @@ export default function(options: FeatureOptions): Rule {
       move(featurePath)
     ]);
 
+    console.log(options);
     return chain([
       externalSchematic('@nrwl/angular', 'lib', {
-        name: `feature-${options.name}`,
+        name: `feature-${options.name}-${options.platform}`,
         directory: options.domain,
-        tags: `domain:${options.domain},type:feature`,
+        tags: `domain:${options.domain},type:feature,platform:${options.platform}`,
+        simpleModuleName: true,
+        routing: true,
+        lazy: options.lazy,
+        parentModule: shellModulePath,
         style: 'scss',
         prefix: options.domain
       }),
       addImport(featureModulePath, domainImportPath, domainModuleClassName),
-      !options.lazy && host.exists(appModulePath)
-        ? chain([
-            addImport(
-              appModulePath,
-              featureImportPath,
-              featureModuleClassName,
-              true
-            ),
-            addImport(
-              appModulePath,
-              '@angular/common/http',
-              'HttpClientModule',
-              true
-            )
-          ])
-        : noop(),
-      mergeWith(domainTemplates),
+      mergeWith(domainTemplates), // FIXME
       options.entity
         ? addTsExport(domainIndexPath, [
             `./lib/entities/${entityName}`,
-            `./lib/services/${entityName}.service`
+            `./lib/services/${entityName}.service`,
+            `./lib/state/${entityName}.state`
           ])
         : noop(),
-      addTsExport(domainIndexPath, [`./lib/state/${featureName}.state`]),
       mergeWith(featureTemplates),
-      addTsExport(featureIndexPath, [`./lib/${featureName}.component`]),
+      addTsExport(featureIndexPath, [
+        `./lib/containers/${featureName}/${featureName}.component`
+      ]),
       addDeclaration(
         featureModulePath,
         featureComponentImportPath,

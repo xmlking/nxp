@@ -11,10 +11,21 @@
         "index": 0
       }
     },
-    "addApp": {
+    "app": {
+      "type": "string",
+      "description": "app name"
+    },
+    "lazy": {
       "type": "boolean",
-      "description": "Add an app for the domain?",
-      "default": false
+      "description": "Is this feature module lazy loaded?",
+      "default": true
+    },
+    "platform": {
+      "description": "runtime platform",
+      "alias": "p",
+      "type": "string",
+      "enum": ["web", "mobile", "desktop", "node", "universal"],
+      "default": "web"
     }
   },
   "required": ["name"]

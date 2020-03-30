@@ -11,8 +11,16 @@ export interface DomainOptions {
    */
   name: string;
   /**
-   * Add an app for the domain?
+   * app name
    */
-  addApp?: boolean;
+  app?: string;
+  /**
+   * Is this feature module lazy loaded?
+   */
+  lazy?: boolean;
+  /**
+   * runtime platform
+   */
+  platform?: "web" | "mobile" | "desktop" | "node" | "universal";
   [k: string]: any;
 }

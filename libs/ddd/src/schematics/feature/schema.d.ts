@@ -15,17 +15,13 @@ export interface FeatureOptions {
    */
   domain: string;
   /**
-   * app name
-   */
-  app?: string;
-  /**
    * Is this feature module lazy loaded?
    */
   lazy?: boolean;
   /**
    * runtime platform
    */
-  platform?: 'web' | 'mobile' | 'desktop' | 'node' | 'universal';
+  platform?: "web" | "mobile" | "desktop" | "node" | "universal";
   /**
    * Optional entity to create for this feature
    */

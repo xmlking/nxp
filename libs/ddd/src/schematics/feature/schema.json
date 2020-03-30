@@ -15,21 +15,17 @@
       "type": "string",
       "description": "Domain name"
     },
-    "app": {
-      "type": "string",
-      "description": "app name"
-    },
     "lazy": {
       "type": "boolean",
       "description": "Is this feature module lazy loaded?",
-      "default": false
+      "default": true
     },
     "platform": {
       "description": "runtime platform",
       "alias": "p",
       "type": "string",
       "enum": ["web", "mobile", "desktop", "node", "universal"],
-      "x-prompt": "Which platform this module is targeted for?"
+      "default": "web"
     },
     "entity": {
       "type": "string",

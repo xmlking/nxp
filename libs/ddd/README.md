@@ -2,7 +2,7 @@
 
 Nx plugin for structuring a monorepo with domains and layers following **Domain Driven Development**
 
-![DDD](ddd.png 'domain driven development')
+![DDD](https://github.com/xmlking/nxp/raw/master/libs/ddd/ddd.png 'domain driven development')
 
 This library was generated with [Nx](https://nx.dev).
 

@@ -31,5 +31,9 @@
   ],
   "scripts": {
     "build": "echo test..."
+  },
+  "peerDependencies": {
+    "@ngxs/store": "*",
+    "@nrwl/angular": "*"
   }
 }

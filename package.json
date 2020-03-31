@@ -39,6 +39,7 @@
   },
   "private": true,
   "dependencies": {
+    "@nrwl/angular": "^9.1.4",
     "@schematics/angular": "9.1.0",
     "json-schema-to-typescript": "^8.2.0"
   },

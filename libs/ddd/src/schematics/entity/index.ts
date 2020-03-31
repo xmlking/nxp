@@ -9,25 +9,10 @@ import {
   Tree,
   url
 } from '@angular-devkit/schematics';
+import { addExportsToBarrel } from '../utils/add-exports-to-barrel';
+import { readWorkspaceName } from '../utils/read-workspace-name';
+import { addImportsToModule } from './rules/add-imports-to-module';
 import { EntityOptions } from './schema';
-
-function addTsExport(filePath: string, filesToExport: string[]): Rule {
-  return (host: Tree) => {
-    let content = host.read(filePath) + '\n';
-
-    for (const file of filesToExport) {
-      content += `export * from '${file}';\n`;
-    }
-
-    host.overwrite(filePath, content);
-  };
-}
-
-function readWorkspaceName(host: Tree): string {
-  const content = host.read('nx.json').toString();
-  const config = JSON.parse(content);
-  return '@' + config['npmScope'];
-}
 
 export default function(options: EntityOptions): Rule {
   return (host: Tree) => {
@@ -45,11 +30,12 @@ export default function(options: EntityOptions): Rule {
 
     return chain([
       mergeWith(templateSource),
-      addTsExport(domainIndexPath, [
+      addExportsToBarrel(domainIndexPath, [
         `./lib/entities/${strings.dasherize(options.name)}.interface`,
         `./lib/services/${strings.dasherize(options.name)}.service`,
         `./lib/state/${strings.dasherize(options.name)}.state`
-      ])
+      ]),
+      addImportsToModule(options)
     ]);
   };
 }

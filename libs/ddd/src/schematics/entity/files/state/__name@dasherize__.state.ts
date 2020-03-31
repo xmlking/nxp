@@ -1,24 +1,32 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { State, Action, Selector, StateContext } from '@ngxs/store';
+import { <%= classify(name) %>Action } from './<%= dasherize(name) %>.actions';
 import { <%=classify(name)%> } from '../entities/<%=dasherize(name)%>.interface';
-import { <%=classify(name)%>Service } from '../services/<%=dasherize(name)%>.service';
 
-@Injectable({ providedIn: 'root' })
-export class <%=classify(name)%>State {
-    private <%=camelize(name)%>ListSubject = new BehaviorSubject<<%=classify(name)%>[]>([]);
-    <%=camelize(name)%>List$ = this.<%=camelize(name)%>ListSubject.asObservable();
+export interface <%= classify(name) %>StateModel {
+  items: <%=classify(name)%>[];
+}
 
-    constructor(private <%=camelize(name)%>Service: <%=classify(name)%>Service) {
-    }
+@State<<%= classify(name) %>StateModel>({
+  name: '<%= camelize(name) %>',
+  defaults: {
+    items: []
+  }
+})
+@Injectable({
+  providedIn: 'root'
+})
+export class <%= classify(name) %>State {
 
-    load(): void {
-        this.<%=camelize(name)%>Service.load().subscribe(
-            <%=camelize(name)%>List => {
-                this.<%=camelize(name)%>ListSubject.next(<%=camelize(name)%>List)
-            },
-            err => {
-                console.error('err', err);
-            }
-        );
-    }
+  @Selector()
+  public static getState(state: <%= classify(name) %>StateModel) {
+    return state;
+  }
+
+  @Action(<%= classify(name) %>Action)
+  public add(ctx: StateContext<<%= classify(name) %>StateModel>, { payload }: <%= classify(name) %>Action) {
+    const stateModel = ctx.getState();
+    stateModel.items = [...stateModel.items, payload];
+    ctx.setState(stateModel);
+  }
 }

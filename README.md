@@ -10,9 +10,10 @@ Plugins for [Nx](https://nx.dev).
 
 - [**@xmlking/nxp-ddd**](libs/ddd/) - Nx plugin for structuring a monorepo with domains and layers
 
-This plugin adds small enhancements to @manfredsteyer [DDD](https://github.com/angular-architects/nx-ddd-plugin) Nx plugin
+This plugin adds some enhancements to @manfredsteyer [DDD](https://github.com/angular-architects/nx-ddd-plugin) Nx plugin
 
 - State Management with [ngxs](https://www.ngxs.io/)
+- [Shell Library patterns](https://indepth.dev/the-shell-library-patterns-with-nx-and-monorepo-architectures/)
 - Ability to add `entities` independently as well as along with adding `feature` modules
 
 ## Build Status

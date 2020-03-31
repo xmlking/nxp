@@ -1,6 +1,25 @@
 # @xmlking/nxp-ddd
 
+Nx plugin for structuring a monorepo with domains and layers following **Domain Driven Development**
+
+![DDD](ddd.png 'domain driven development')
+
 This library was generated with [Nx](https://nx.dev).
+
+## Install
+
+package is available on [GitHub Packages](https://help.github.com/en/packages/using-github-packages-with-your-projects-ecosystem/configuring-npm-for-use-with-github-packages)
+
+Please add following to `~/.npmrc`
+
+```
+@xmlking:registry=<https://npm.pkg.github.com/>
+//npm.pkg.github.com/:_authToken=TOKEN
+```
+
+```bash
+ng add @xmlking/nxp-ddd
+```
 
 ## Usage
 
@@ -11,17 +30,23 @@ yarn create nx-workspace yeti --preset=angular-nest --app-name=yeti-web-app \
 # update deps
 ng update --all  --allow-dirty --force
 # add plugin
-ng add /Users/schintha/Developer/Work/SPA/nxp/dist/libs/ddd
+ng add @xmlking/nxp-ddd
+# for local development
+ng add ~/Developer/Work/SPA/nxp/dist/libs/ddd
 nx g @xmlking/nxp-ddd:ng-add
 
-# generate domain. options: --platform <web/mobile/desktop/node>  --app <appName> --lazy <default=true>
+# generate domain. optional flags: --platform <web/mobile/desktop/node>  --app <appName> --lazy <true/false>
+# defaults platform=web, app=defaultProject, lazy=true
 nx g @xmlking/nxp-ddd:domain booking
 nx g @xmlking/nxp-ddd:domain boarding  --platform web  --app yeti-web-app
-# generate feature module. options: --platform <web/mobile/desktop/node> --lazy <default=true> --entity <entity>
+# generate feature module. optional flags: --platform <web/mobile/desktop/node> --lazy  --entity <entity>
+# defaults platform=web, app=defaultProject, lazy=true
 nx g @xmlking/nxp-ddd:feature search --domain booking
 nx g @xmlking/nxp-ddd:feature search --domain booking --platform web --lazy
 nx g @xmlking/nxp-ddd:feature search --domain booking --platform web --lazy=false
 nx g @xmlking/nxp-ddd:feature search --domain booking --platform web --entity flight
+nx g @xmlking/nxp-ddd:feature search --domain booking --platform web --entity flight
+nx g @xmlking/nxp-ddd:feature manage --domain boarding --entity user
 
 # generate entity.
 nx g @xmlking/nxp-ddd:entity user --domain booking

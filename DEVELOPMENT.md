@@ -8,6 +8,7 @@ Doc for `Contributors`
 # scaffolding empty project
 yarn create nx-plugin nxp --pluginName ddd
 lerna init --independent
+yarn config set workspaces-experimental true
 # adding new plugin
 nx g @nrwl/nx-plugin:plugin [pluginName]
 ```
@@ -38,6 +39,11 @@ To publish your plugin follow these steps:
 1. Build your plugin with the command `nx run ddd:build`
 2. `npm publish ./dist/libs/ddd` and follow the prompts from npm.
 3. That's it!
+
+> via learn
+
+1. lerna version
+2. lerna publish from-package
 
 To add your plugin modify the community/approved-plugins.json file in the [Nrwl/nx](https://github.com/nrwl/nx/blob/master/community/approved-plugins.json) repo and create a pull request with `yarn submit-plugin`.
 

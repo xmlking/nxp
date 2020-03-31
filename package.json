@@ -29,13 +29,13 @@
     "dep-graph": "nx dep-graph",
     "help": "nx help",
     "// - EXTRA": "Extra commands",
-    "version:next": "lerna version --conventional-prerelease=\"@xmlking/nxp-{ddd}\" --no-push --preid next",
-    "publish:git:gpr": "lerna publish from-git --yes --registry https://npm.pkg.github.com",
-    "publish:pkg:gpr": "lerna publish from-package --yes --registry https://npm.pkg.github.com",
-    "// - DDD": "ddd lib commands",
+    "prepublish": "yarn build:ddd",
     "build:ddd": "nx build ddd",
     "pack:ddd": "npm pack ./dist/libs/ddd",
-    "build:schema": "node libs/ddd/src/schematics/json-schema-to-ts.js"
+    "build:schema": "node libs/ddd/src/schematics/json-schema-to-ts.js",
+    "version:next": "lerna version --conventional-prerelease=\"@xmlking/nxp-{ddd}\" --no-push --preid next",
+    "publish:git:gpr": "lerna publish from-git --yes --registry https://npm.pkg.github.com",
+    "publish:pkg:gpr": "lerna publish from-package --yes --registry https://npm.pkg.github.com"
   },
   "private": true,
   "dependencies": {

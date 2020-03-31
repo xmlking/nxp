@@ -30,7 +30,7 @@
     "nestjs"
   ],
   "scripts": {
-    "build": "echo test..."
+    "build": "echo building..."
   },
   "peerDependencies": {
     "@ngxs/store": "*",

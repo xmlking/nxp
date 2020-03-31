@@ -8,7 +8,7 @@ This library was generated with [Nx](https://nx.dev).
 
 ## Install
 
-package is available on [GitHub Packages](https://help.github.com/en/packages/using-github-packages-with-your-projects-ecosystem/configuring-npm-for-use-with-github-packages)
+This npm package is available on [GitHub Packages](https://help.github.com/en/packages/using-github-packages-with-your-projects-ecosystem/configuring-npm-for-use-with-github-packages) at [nxp-ddd](https://github.com/xmlking/nxp/packages/165973)
 
 Please add following to `~/.npmrc`
 

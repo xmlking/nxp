@@ -57,9 +57,9 @@ export function initLintingRules(): Rule {
 
     const depConst = rules['rules']['nx-enforce-module-boundaries'][1]['depConstraints'] as Array<object>;
 
-    const jokerIndex = depConst.findIndex(entry => 
-      entry['sourceTag'] 
-        && entry['sourceTag'] === '*' 
+    const jokerIndex = depConst.findIndex(entry =>
+      entry['sourceTag']
+        && entry['sourceTag'] === '*'
         && entry['onlyDependOnLibsWithTags']
         && Array.isArray(entry['onlyDependOnLibsWithTags'])
         && entry['onlyDependOnLibsWithTags'].length > 0
@@ -68,6 +68,26 @@ export function initLintingRules(): Rule {
     if (jokerIndex !== -1) {
       depConst.splice(jokerIndex, 1);
     }
+
+    depConst.push({
+      sourceTag: 'platform:web',
+      onlyDependOnLibsWithTags: ['platform:web', 'platform:universal']
+    });
+
+    depConst.push({
+      sourceTag: 'platform:mobile',
+      onlyDependOnLibsWithTags: ['platform:mobile', 'platform:universal']
+    });
+
+    depConst.push({
+      sourceTag: 'platform:desktop',
+      onlyDependOnLibsWithTags: ['platform:desktop', 'platform:universal']
+    });
+
+    depConst.push({
+      sourceTag: 'platform:node',
+      onlyDependOnLibsWithTags: ['platform:node', 'platform:universal']
+    });
 
     depConst.push({
       'sourceTag': 'type:api',

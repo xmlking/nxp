@@ -1,6 +1,6 @@
 {
   "name": "@xmlking/nxp-ddd",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "license": "MIT",
   "author": "Sumanth Chinthagunta <xmlking+github@gmail.com>",
   "description": "Nx plugin for structuring a monorepo with domains and layers",

@@ -15,7 +15,7 @@ jobs:
       - name: Setup Tools
         run: |
           # npm install -g lerna
-          npm install -g @angular/cli
+          # npm install -g @angular/cli
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Check out Code

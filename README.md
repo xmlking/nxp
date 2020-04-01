@@ -20,7 +20,7 @@ This plugin adds some enhancements to @manfredsteyer [DDD](https://github.com/an
 
 ## Build Status
 
-![check](https://github.com/xmlking/nxp/workflows/check/badge.svg)
+[![check](https://github.com/xmlking/nxp/workflows/check/badge.svg)](https://github.com/xmlking/nxp/actions?query=workflow%3Acheck)
 
 ## Documentation
 

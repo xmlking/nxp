@@ -6,6 +6,8 @@
 [![Renovate dependency Status](https://img.shields.io/badge/renovate-enabled-brightgreen.svg)](https://renovatebot.com/)
 [![MIT license](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
 
+[![Actions Status][gh-actions-badge]][gh-actions] [![Node Version][node-badge]][npm] [![NPM version][npm-badge]][npm]
+
 Plugins for [Nx](https://nx.dev).
 
 - [**@xmlking/nxp-ddd**](libs/ddd/) - Nx plugin for structuring a monorepo with domains and layers

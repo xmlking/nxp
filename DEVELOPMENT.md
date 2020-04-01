@@ -19,7 +19,15 @@ why you change any schematics's `schema.json`, run the following command to gene
 yarn build:schema
 ```
 
-## Testing
+## E2E Testing
+
+```bash
+# this won't work because, generated tmp project is of type cli=nx, but my schematics need project of type cli=angular
+# tmp project has `workspace.json` instead of `angular.json`
+nx e2e ddd-e2e
+```
+
+> with your own test project
 
 ```bash
 # build this schematic

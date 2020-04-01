@@ -27,11 +27,12 @@ ng add @xmlking/nxp-ddd
 # scaffold angular project monorepo
 yarn create nx-workspace yeti --preset=angular-nest --app-name=yeti-web-app \
 --style=scss --cli=angular --npm-scope=yeti --interactive   --verbose
+cd yeti
 # update deps
 ng update --all  --allow-dirty --force
 # add plugin
 ng add @xmlking/nxp-ddd
-# for local development
+# (or) for local development
 ng add ~/Developer/Work/SPA/nxp/dist/libs/ddd
 nx g @xmlking/nxp-ddd:ng-add
 
@@ -44,7 +45,6 @@ nx g @xmlking/nxp-ddd:domain boarding  --platform web  --app yeti-web-app
 nx g @xmlking/nxp-ddd:feature search --domain booking
 nx g @xmlking/nxp-ddd:feature search --domain booking --platform web --lazy
 nx g @xmlking/nxp-ddd:feature search --domain booking --platform web --lazy=false
-nx g @xmlking/nxp-ddd:feature search --domain booking --platform web --entity flight
 nx g @xmlking/nxp-ddd:feature search --domain booking --platform web --entity flight
 nx g @xmlking/nxp-ddd:feature manage --domain boarding --entity user
 

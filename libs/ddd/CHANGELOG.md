@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.6](https://github.com/xmlking/nxp/compare/@xmlking/nxp-ddd@0.1.5...@xmlking/nxp-ddd@0.1.6) (2020-04-01)
+
+
+### Bug Fixes
+
+* **domain:** now properly adding `Store` to `NgxsModule.forFeature` ([cc6382f](https://github.com/xmlking/nxp/commit/cc6382f6a72a5916555d52781f02c736ec967006))
+
+
+
+
+
 ## [0.1.5](https://github.com/xmlking/nxp/compare/@xmlking/nxp-ddd@0.1.4...@xmlking/nxp-ddd@0.1.5) (2020-03-31)
 
 

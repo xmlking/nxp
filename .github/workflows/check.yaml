@@ -35,7 +35,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Lint
         run: |
-          ls -la node_modules/.bin
+          ls -la .
           yarn affected:lint
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

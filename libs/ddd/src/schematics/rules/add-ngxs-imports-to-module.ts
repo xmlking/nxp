@@ -4,9 +4,9 @@ import { addImportToModule } from '@nrwl/angular/src/utils/ast-utils';
 import { insert, toClassName } from '@nrwl/workspace';
 import { insertImport } from '@nrwl/workspace/src/utils/ast-utils';
 import * as ts from 'typescript';
-import { EntityOptions } from '../schema';
+import { EntityOptions } from '../entity/schema';
 
-export function addImportsToModule(options: EntityOptions): Rule {
+export function addNgxsImportsToModule(options: EntityOptions): Rule {
   return (host: Tree) => {
     const stateName = `${toClassName(options.name)}State`;
     const storeForFeature = `NgxsModule.forFeature([${stateName}])`;

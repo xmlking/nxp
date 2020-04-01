@@ -9,9 +9,11 @@ import {
   Tree,
   url
 } from '@angular-devkit/schematics';
-import { addExportsToBarrel } from '../utils/add-exports-to-barrel';
-import { readWorkspaceName } from '../utils/read-workspace-name';
-import { addImportsToModule } from './rules/add-imports-to-module';
+import {
+  addExportsToBarrel,
+  addNgxsImportsToModule,
+  readWorkspaceName
+} from '../rules';
 import { EntityOptions } from './schema';
 
 export default function(options: EntityOptions): Rule {
@@ -35,7 +37,7 @@ export default function(options: EntityOptions): Rule {
         `./lib/services/${strings.dasherize(options.name)}.service`,
         `./lib/state/${strings.dasherize(options.name)}.state`
       ]),
-      addImportsToModule(options)
+      addNgxsImportsToModule(options)
     ]);
   };
 }

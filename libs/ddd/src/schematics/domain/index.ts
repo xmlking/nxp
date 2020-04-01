@@ -8,7 +8,7 @@ import {
   Tree
 } from '@angular-devkit/schematics';
 import { getWorkspace } from '@schematics/angular/utility/config';
-import { addDomainToLintingRules } from '../utils/update-linting-rules';
+import { addDomainToLintingRules } from '../rules';
 import { DomainOptions } from './schema';
 
 export default function(options: DomainOptions): Rule {

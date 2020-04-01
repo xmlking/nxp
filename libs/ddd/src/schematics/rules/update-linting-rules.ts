@@ -1,4 +1,4 @@
-import { Rule, Tree, SchematicContext  } from '@angular-devkit/schematics';
+import { Rule, Tree, SchematicContext } from '@angular-devkit/schematics';
 
 export function checkRuleExists(rules: object, context: SchematicContext) {
   if (!rules['rules']) {
@@ -17,18 +17,25 @@ export function checkRuleExists(rules: object, context: SchematicContext) {
   }
 
   if (!rules['rules']['nx-enforce-module-boundaries'][1]['depConstraints']) {
-    context.logger.info('tslint.json: nx-enforce-module-boundaries.1.depConstraints expected.');
+    context.logger.info(
+      'tslint.json: nx-enforce-module-boundaries.1.depConstraints expected.'
+    );
     return false;
   }
 
-  if (!Array.isArray(rules['rules']['nx-enforce-module-boundaries'][1]['depConstraints'])) {
-    context.logger.info('tslint.json: nx-enforce-module-boundaries.1.depConstraints expected to be an array.');
+  if (
+    !Array.isArray(
+      rules['rules']['nx-enforce-module-boundaries'][1]['depConstraints']
+    )
+  ) {
+    context.logger.info(
+      'tslint.json: nx-enforce-module-boundaries.1.depConstraints expected to be an array.'
+    );
     return false;
   }
 
   return true;
 }
-
 
 export function addDomainToLintingRules(domainName: string): Rule {
   return (host: Tree, context: SchematicContext) => {
@@ -37,15 +44,16 @@ export function addDomainToLintingRules(domainName: string): Rule {
 
     if (!checkRuleExists(rules, context)) return;
 
-    const depConst = rules['rules']['nx-enforce-module-boundaries'][1]['depConstraints'];
+    const depConst =
+      rules['rules']['nx-enforce-module-boundaries'][1]['depConstraints'];
     depConst.push({
-      'sourceTag': `domain:${domainName}`,
-      'onlyDependOnLibsWithTags': [`domain:${domainName}`, 'domain:shared']
+      sourceTag: `domain:${domainName}`,
+      onlyDependOnLibsWithTags: [`domain:${domainName}`, 'domain:shared']
     });
 
     const newText = JSON.stringify(rules, undefined, 2);
     host.overwrite('tslint.json', newText);
-  }
+  };
 }
 
 export function initLintingRules(): Rule {
@@ -55,15 +63,19 @@ export function initLintingRules(): Rule {
 
     if (!checkRuleExists(rules, context)) return;
 
-    const depConst = rules['rules']['nx-enforce-module-boundaries'][1]['depConstraints'] as Array<object>;
+    const depConst = rules['rules']['nx-enforce-module-boundaries'][1][
+      'depConstraints'
+    ] as Array<object>;
 
-    const jokerIndex = depConst.findIndex(entry =>
-      entry['sourceTag']
-        && entry['sourceTag'] === '*'
-        && entry['onlyDependOnLibsWithTags']
-        && Array.isArray(entry['onlyDependOnLibsWithTags'])
-        && entry['onlyDependOnLibsWithTags'].length > 0
-        && entry['onlyDependOnLibsWithTags'][0] === '*');
+    const jokerIndex = depConst.findIndex(
+      entry =>
+        entry['sourceTag'] &&
+        entry['sourceTag'] === '*' &&
+        entry['onlyDependOnLibsWithTags'] &&
+        Array.isArray(entry['onlyDependOnLibsWithTags']) &&
+        entry['onlyDependOnLibsWithTags'].length > 0 &&
+        entry['onlyDependOnLibsWithTags'][0] === '*'
+    );
 
     if (jokerIndex !== -1) {
       depConst.splice(jokerIndex, 1);
@@ -90,31 +102,31 @@ export function initLintingRules(): Rule {
     });
 
     depConst.push({
-      'sourceTag': 'type:api',
-      'onlyDependOnLibsWithTags': ['type:ui', 'type:domain-logic', 'type:util']
+      sourceTag: 'type:api',
+      onlyDependOnLibsWithTags: ['type:ui', 'type:domain-logic', 'type:util']
     });
 
     depConst.push({
-      'sourceTag': 'type:feature',
-      'onlyDependOnLibsWithTags': ['type:ui', 'type:domain-logic', 'type:util']
+      sourceTag: 'type:feature',
+      onlyDependOnLibsWithTags: ['type:ui', 'type:domain-logic', 'type:util']
     });
 
     depConst.push({
-      'sourceTag': 'type:ui',
-      'onlyDependOnLibsWithTags': ['type:domain-logic', 'type:util']
+      sourceTag: 'type:ui',
+      onlyDependOnLibsWithTags: ['type:domain-logic', 'type:util']
     });
 
     depConst.push({
-      'sourceTag': 'domain-logic',
-      'onlyDependOnLibsWithTags': ['type:util']
+      sourceTag: 'domain-logic',
+      onlyDependOnLibsWithTags: ['type:util']
     });
 
     depConst.push({
-      'sourceTag': 'domain:shared',
-      'onlyDependOnLibsWithTags': ['domain:shared']
+      sourceTag: 'domain:shared',
+      onlyDependOnLibsWithTags: ['domain:shared']
     });
 
     const newText = JSON.stringify(rules, undefined, 2);
     host.overwrite('tslint.json', newText);
-  }
+  };
 }

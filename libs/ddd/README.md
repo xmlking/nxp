@@ -34,7 +34,6 @@ ng update --all  --allow-dirty --force
 ng add @xmlking/nxp-ddd
 # (or) for local development
 ng add ~/Developer/Work/SPA/nxp/dist/libs/ddd
-nx g @xmlking/nxp-ddd:ng-add
 
 # generate domain. optional flags: --platform <web/mobile/desktop/node>  --app <appName> --lazy <true/false>
 # defaults platform=web, app=defaultProject, lazy=true
@@ -43,9 +42,9 @@ nx g @xmlking/nxp-ddd:domain boarding  --platform web  --app yeti-web-app
 # generate feature module. optional flags: --platform <web/mobile/desktop/node> --lazy  --entity <entity>
 # defaults platform=web, app=defaultProject, lazy=true
 nx g @xmlking/nxp-ddd:feature search --domain booking
+nx g @xmlking/nxp-ddd:feature search --domain booking --entity flight
 nx g @xmlking/nxp-ddd:feature search --domain booking --platform web --lazy
 nx g @xmlking/nxp-ddd:feature search --domain booking --platform web --lazy=false
-nx g @xmlking/nxp-ddd:feature search --domain booking --platform web --entity flight
 nx g @xmlking/nxp-ddd:feature manage --domain boarding --entity user
 
 # generate entity.

@@ -33,6 +33,7 @@ ng update --all  --allow-dirty --force
 # add plugin
 ng add @xmlking/nxp-ddd
 # (or) for local development
+yarn build:ddd
 ng add ~/Developer/Work/SPA/nxp/dist/libs/ddd
 
 # generate domain. optional flags: --platform <web/mobile/desktop/node>  --app <appName> --lazy <true/false>

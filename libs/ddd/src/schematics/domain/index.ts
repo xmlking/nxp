@@ -48,6 +48,13 @@ export default function(options: DomainOptions): Rule {
         parentModule: appModulePath,
         prefix: options.name
       }),
+      externalSchematic('@schematics/angular', 'component', {
+        name: options.name,
+        project: `${options.name}-shell-${options.platform}`,
+        flat: true,
+        style: 'scss',
+        selector: `${strings.dasherize(options.name)}-shell`
+      }),
       externalSchematic('@nrwl/angular', 'lib', {
         name: 'domain',
         directory: options.name,

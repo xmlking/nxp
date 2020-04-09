@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/xmlking/nxp/compare/@xmlking/nxp-ddd@0.1.7...@xmlking/nxp-ddd@0.2.0) (2020-04-09)
+
+
+### Features
+
+* **application:** adding app sschematics, not adding suffix when platform options is not provided ([66a4d20](https://github.com/xmlking/nxp/commit/66a4d20cfc00b39c7ae4c582346ba7092a927cd2))
+
+
+
+
+
 ## [0.1.7](https://github.com/xmlking/nxp/compare/@xmlking/nxp-ddd@0.1.6...@xmlking/nxp-ddd@0.1.7) (2020-04-03)
 
 **Note:** Version bump only for package @xmlking/nxp-ddd

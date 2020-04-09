@@ -1,36 +1,29 @@
-import { Rule, Tree, SchematicContext } from '@angular-devkit/schematics';
+import { chain, Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
+import { updateJsonInTree } from '@nrwl/workspace';
 
-export function checkRuleExists(rules: object, context: SchematicContext) {
-  if (!rules['rules']) {
+export function checkRuleExists(json: object, context: SchematicContext) {
+  if (!json['rules']) {
     context.logger.info('tslint.json: rules expected');
     return false;
   }
 
-  if (!rules['rules']['nx-enforce-module-boundaries']) {
+  if (!json['rules']['nx-enforce-module-boundaries']) {
     context.logger.info('tslint.json: nx-enforce-module-boundaries expected');
     return false;
   }
 
-  if (rules['rules']['nx-enforce-module-boundaries']['length'] < 2) {
+  if (json['rules']['nx-enforce-module-boundaries']['length'] < 2) {
     context.logger.info('nx-enforce-module-boundaries.1 unexpected');
     return false;
   }
 
-  if (!rules['rules']['nx-enforce-module-boundaries'][1]['depConstraints']) {
-    context.logger.info(
-      'tslint.json: nx-enforce-module-boundaries.1.depConstraints expected.'
-    );
+  if (!json['rules']['nx-enforce-module-boundaries'][1]['depConstraints']) {
+    context.logger.info('tslint.json: nx-enforce-module-boundaries.1.depConstraints expected.');
     return false;
   }
 
-  if (
-    !Array.isArray(
-      rules['rules']['nx-enforce-module-boundaries'][1]['depConstraints']
-    )
-  ) {
-    context.logger.info(
-      'tslint.json: nx-enforce-module-boundaries.1.depConstraints expected to be an array.'
-    );
+  if (!Array.isArray(json['rules']['nx-enforce-module-boundaries'][1]['depConstraints'])) {
+    context.logger.info('tslint.json: nx-enforce-module-boundaries.1.depConstraints expected to be an array.');
     return false;
   }
 
@@ -39,94 +32,99 @@ export function checkRuleExists(rules: object, context: SchematicContext) {
 
 export function addDomainToLintingRules(domainName: string): Rule {
   return (host: Tree, context: SchematicContext) => {
-    const text = host.read('tslint.json').toString();
-    const rules = JSON.parse(text);
+    if (!host.exists('tslint.json')) {
+      context.logger.info('tslint.json: not found. doing nothing');
+      return host;
+    }
 
-    if (!checkRuleExists(rules, context)) return;
+    return chain([
+      updateJsonInTree('tslint.json', (json) => {
+        if (checkRuleExists(json, context)) {
+          const depConst = json?.rules?.['nx-enforce-module-boundaries']?.[1]?.depConstraints as Array<any>;
 
-    const depConst =
-      rules['rules']['nx-enforce-module-boundaries'][1]['depConstraints'];
-    depConst.push({
-      sourceTag: `domain:${domainName}`,
-      onlyDependOnLibsWithTags: [`domain:${domainName}`, 'domain:shared']
-    });
-
-    const newText = JSON.stringify(rules, undefined, 2);
-    host.overwrite('tslint.json', newText);
+          depConst.push({
+            sourceTag: `domain:${domainName}`,
+            onlyDependOnLibsWithTags: [`domain:${domainName}`, 'domain:shared'],
+          });
+        }
+        return json;
+      }),
+    ])(host, context);
   };
 }
 
 export function initLintingRules(): Rule {
   return (host: Tree, context: SchematicContext) => {
-    const text = host.read('tslint.json').toString();
-    const rules = JSON.parse(text);
-
-    if (!checkRuleExists(rules, context)) return;
-
-    const depConst = rules['rules']['nx-enforce-module-boundaries'][1][
-      'depConstraints'
-    ] as Array<object>;
-
-    const jokerIndex = depConst.findIndex(
-      entry =>
-        entry['sourceTag'] &&
-        entry['sourceTag'] === '*' &&
-        entry['onlyDependOnLibsWithTags'] &&
-        Array.isArray(entry['onlyDependOnLibsWithTags']) &&
-        entry['onlyDependOnLibsWithTags'].length > 0 &&
-        entry['onlyDependOnLibsWithTags'][0] === '*'
-    );
-
-    if (jokerIndex !== -1) {
-      depConst.splice(jokerIndex, 1);
+    if (!host.exists('tslint.json')) {
+      context.logger.info('tslint.json: not found. doing nothing');
+      return host;
     }
 
-    depConst.push({
-      sourceTag: 'platform:web',
-      onlyDependOnLibsWithTags: ['platform:web', 'platform:universal']
-    });
+    return chain([
+      updateJsonInTree('tslint.json', (json) => {
+        if (checkRuleExists(json, context)) {
+          const depConst = json?.rules?.['nx-enforce-module-boundaries']?.[1]?.depConstraints as Array<any>;
 
-    depConst.push({
-      sourceTag: 'platform:mobile',
-      onlyDependOnLibsWithTags: ['platform:mobile', 'platform:universal']
-    });
+          if (depConst.some((dep) => dep.sourceTag === 'platform:web')) {
+            context.logger.info('tslint.json: domain linting rules already exist. doing nothing');
+            return json;
+          }
 
-    depConst.push({
-      sourceTag: 'platform:desktop',
-      onlyDependOnLibsWithTags: ['platform:desktop', 'platform:universal']
-    });
+          const jokerIndex = depConst.findIndex(
+            (entry) =>
+              entry['sourceTag'] &&
+              entry['sourceTag'] === '*' &&
+              entry['onlyDependOnLibsWithTags'] &&
+              Array.isArray(entry['onlyDependOnLibsWithTags']) &&
+              entry['onlyDependOnLibsWithTags'].length > 0 &&
+              entry['onlyDependOnLibsWithTags'][0] === '*'
+          );
 
-    depConst.push({
-      sourceTag: 'platform:node',
-      onlyDependOnLibsWithTags: ['platform:node', 'platform:universal']
-    });
+          if (jokerIndex !== -1) {
+            depConst.splice(jokerIndex, 1);
+          }
 
-    depConst.push({
-      sourceTag: 'type:api',
-      onlyDependOnLibsWithTags: ['type:ui', 'type:domain-logic', 'type:util']
-    });
-
-    depConst.push({
-      sourceTag: 'type:feature',
-      onlyDependOnLibsWithTags: ['type:ui', 'type:domain-logic', 'type:util']
-    });
-
-    depConst.push({
-      sourceTag: 'type:ui',
-      onlyDependOnLibsWithTags: ['type:domain-logic', 'type:util']
-    });
-
-    depConst.push({
-      sourceTag: 'domain-logic',
-      onlyDependOnLibsWithTags: ['type:util']
-    });
-
-    depConst.push({
-      sourceTag: 'domain:shared',
-      onlyDependOnLibsWithTags: ['domain:shared']
-    });
-
-    const newText = JSON.stringify(rules, undefined, 2);
-    host.overwrite('tslint.json', newText);
+          depConst.push(
+            {
+              sourceTag: 'platform:web',
+              onlyDependOnLibsWithTags: ['platform:web', 'platform:universal'],
+            },
+            {
+              sourceTag: 'platform:mobile',
+              onlyDependOnLibsWithTags: ['platform:mobile', 'platform:universal'],
+            },
+            {
+              sourceTag: 'platform:desktop',
+              onlyDependOnLibsWithTags: ['platform:desktop', 'platform:universal'],
+            },
+            {
+              sourceTag: 'platform:node',
+              onlyDependOnLibsWithTags: ['platform:node', 'platform:universal'],
+            },
+            {
+              sourceTag: 'type:api',
+              onlyDependOnLibsWithTags: ['type:ui', 'type:domain-logic', 'type:util'],
+            },
+            {
+              sourceTag: 'type:feature',
+              onlyDependOnLibsWithTags: ['type:ui', 'type:domain-logic', 'type:util'],
+            },
+            {
+              sourceTag: 'type:ui',
+              onlyDependOnLibsWithTags: ['type:domain-logic', 'type:util'],
+            },
+            {
+              sourceTag: 'domain-logic',
+              onlyDependOnLibsWithTags: ['type:util'],
+            },
+            {
+              sourceTag: 'domain:shared',
+              onlyDependOnLibsWithTags: ['domain:shared'],
+            }
+          );
+        }
+        return json;
+      }),
+    ])(host, context);
   };
 }

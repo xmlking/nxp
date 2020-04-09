@@ -24,17 +24,23 @@ ng add @xmlking/nxp-ddd
 ## Usage
 
 ```bash
-# scaffold angular project monorepo
-yarn create nx-workspace yeti --preset=angular-nest --app-name=yeti-web-app \
---style=scss --cli=angular --npm-scope=yeti --interactive   --verbose
+# scaffold workspace
+ng new yeti -c=@nrwl/workspace --preset=empty --style=scss --npm-scope=yeti --app-name=yeti -v
+
 cd yeti
 # update deps
 ng update --all  --allow-dirty --force
-# add plugin
+
+# add nx plugins (schematics)
+ng add @nrwl/angular --defaults
 ng add @xmlking/nxp-ddd
-# (or) for local development
-yarn build:ddd
+# (or) for local plugin development
+yarn build:ddd # in nxp project
 ng add ~/Developer/Work/SPA/nxp/dist/libs/ddd
+
+# add web-app. optional flags: --platform <web/mobile/desktop/node>
+ng g @xmlking/nxp-ddd:app yeti
+# ng g @xmlking/nxp-ddd:app yeti --platform web
 
 # generate domain. optional flags: --platform <web/mobile/desktop/node>  --app <appName> --lazy <true/false>
 # defaults platform=web, app=defaultProject, lazy=true

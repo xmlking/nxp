@@ -1,24 +1,16 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "id": "feature-options",
+  "id": "application-options",
   "type": "object",
   "properties": {
     "name": {
+      "description": "The name of the application.",
       "type": "string",
-      "description": "Library name",
       "$default": {
         "$source": "argv",
         "index": 0
-      }
-    },
-    "domain": {
-      "type": "string",
-      "description": "Domain name"
-    },
-    "lazy": {
-      "type": "boolean",
-      "description": "Is this feature module lazy loaded?",
-      "default": true
+      },
+      "x-prompt": "What name would you like to use for the application?"
     },
     "platform": {
       "description": "runtime platform",
@@ -26,10 +18,10 @@
       "type": "string",
       "enum": ["web", "mobile", "desktop", "node", "universal"]
     },
-    "entity": {
+    "backendProject": {
       "type": "string",
-      "description": "Optional entity to create for this feature"
+      "description": "Backend project that provides data to this application. This sets up proxy.config.json."
     }
   },
-  "required": ["name", "domain"]
+  "required": ["name"]
 }

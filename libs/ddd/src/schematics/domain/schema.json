@@ -24,8 +24,7 @@
       "description": "runtime platform",
       "alias": "p",
       "type": "string",
-      "enum": ["web", "mobile", "desktop", "node", "universal"],
-      "default": "web"
+      "enum": ["web", "mobile", "desktop", "node", "universal"]
     }
   },
   "required": ["name"]

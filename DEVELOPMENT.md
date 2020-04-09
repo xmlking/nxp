@@ -13,7 +13,7 @@ yarn config set workspaces-experimental true
 nx g @nrwl/nx-plugin:plugin [pluginName]
 ```
 
-why you change any schematics's `schema.json`, run the following command to generate `schema.d.ts`
+When you change any schematics's `schema.json`, run the following command to generate `schema.d.ts`
 
 ```bash
 yarn build:schema

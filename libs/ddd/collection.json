@@ -21,6 +21,12 @@
       "factory": "./src/schematics/entity/index",
       "schema": "./src/schematics/entity/schema.json",
       "description": "adds entity to a domain"
+    },
+    "application": {
+      "factory": "./src/schematics/application/index",
+      "schema": "./src/schematics/application/schema.json",
+      "aliases": ["app"],
+      "description": "Create an Angular application"
     }
   }
 }

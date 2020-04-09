@@ -1,4 +1,5 @@
-import { normalize, strings } from '@angular-devkit/core';
+import { normalize } from '@angular-devkit/core';
+import { dasherize } from '@angular-devkit/core/src/utils/strings';
 import {
   chain,
   externalSchematic,
@@ -7,29 +8,28 @@ import {
   schematic,
   SchematicContext,
   SchematicsException,
-  Tree
+  Tree,
 } from '@angular-devkit/schematics';
 import { FeatureOptions } from './schema';
 
-export default function(options: FeatureOptions): Rule {
+export default function (options: FeatureOptions): Rule {
   return (host: Tree) => {
-    const domainName = strings.dasherize(options.domain);
+    const domainName = dasherize(options.domain);
     const domainFolderName = domainName;
 
-    const shellFolderName = `shell-${options.platform}`;
+    const suffix = options.platform ? `-${options.platform}` : '';
+    const platform = options.platform ?? 'web';
+
+    const shellFolderName = `shell${suffix}`;
     const shellPath = `libs/${domainFolderName}/${shellFolderName}/src/lib`;
     const shellModulePath = `${shellPath}/${domainName}-${shellFolderName}.module.ts`;
 
-    const featureName = strings.dasherize(options.name);
-    const featureFolderName = `feature-${strings.dasherize(featureName)}-${
-      options.platform
-    }`;
+    const featureName = dasherize(options.name);
+    const featureFolderName = `feature-${dasherize(featureName)}${suffix}`;
     const featurePath = `libs/${domainFolderName}/${featureFolderName}/src/lib`;
 
     if (!host.exists(shellModulePath)) {
-      throw new SchematicsException(
-        `Specified domain: ${options.domain} does not exist: ${shellModulePath} expected!`
-      );
+      throw new SchematicsException(`Specified domain: ${options.domain} does not exist: ${shellModulePath} expected!`);
     }
 
     function createEmptyFolders(options: FeatureOptions): Rule {
@@ -45,30 +45,28 @@ export default function(options: FeatureOptions): Rule {
       externalSchematic('@nrwl/angular', 'lib', {
         name: featureFolderName,
         directory: options.domain,
-        tags: `domain:${options.domain},type:feature,platform:${options.platform}`,
+        tags: `domain:${options.domain},type:feature,platform:${platform}`,
         routing: true,
         lazy: options.lazy,
         parentModule: shellModulePath,
         style: 'scss',
-        prefix: options.domain
+        prefix: options.domain,
       }),
       externalSchematic('@schematics/angular', 'component', {
         name: options.name,
         project: `${options.domain}-${featureFolderName}`,
         flat: true,
         style: 'scss',
-        selector: `${strings.dasherize(options.domain)}-${strings.dasherize(
-          options.name
-        )}`,
-        prefix: options.domain
+        selector: `${dasherize(options.domain)}-${dasherize(options.name)}`,
+        prefix: options.domain,
       }),
       options.entity
         ? schematic('entity', {
             name: options.entity,
-            domain: options.domain
+            domain: options.domain,
           })
         : noop(),
-      createEmptyFolders(options)
+      createEmptyFolders(options),
     ]);
   };
 }

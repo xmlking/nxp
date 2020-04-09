@@ -52,8 +52,8 @@ To publish your plugin follow these steps:
 
 > via learn
 
-1. lerna version
-2. lerna publish from-package (this will run prepublish life cycle script first)
+1. `lerna version`
+2. `lerna publish from-package` (this will run prepublish life cycle script first)
 
 To add your plugin modify the community/approved-plugins.json file in the [Nrwl/nx](https://github.com/nrwl/nx/blob/master/community/approved-plugins.json) repo and create a pull request with `yarn submit-plugin`.
 

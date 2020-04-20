@@ -59,6 +59,11 @@ nx g @xmlking/nxp-ddd:entity user --domain booking
 nx g @xmlking/nxp-ddd:entity seat --domain boarding
 ```
 
+### Post action
+
+After generation all modules, you might have to remove `pathMatch: 'full'` and adjust your routes in some module's Router config .<br/>
+Optionally add `<router-outlet></router-outlet>` in shell component's HTML
+
 ## Running unit tests
 
 Run `nx test ddd` to execute the unit tests via [Jest](https://jestjs.io).

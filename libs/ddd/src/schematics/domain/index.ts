@@ -14,6 +14,36 @@ import { DomainOptions } from './schema';
 
 export default function (options: DomainOptions): Rule {
   return (host: Tree) => {
+    const workspace = getWorkspace(host);
+    // getting project name
+    if (!options.app) {
+      if (workspace.defaultProject) {
+        options.app = workspace.defaultProject;
+      } else {
+        throw new SchematicsException('No Angular project selected and no default project in the workspace');
+      }
+    }
+
+    // Validating project name
+    const project = workspace.projects[options.app];
+    if (!project) {
+      throw new SchematicsException('The specified Angular project is not defined in this workspace');
+    }
+
+    // Checking if it is application
+    if (project.projectType !== 'application') {
+      throw new SchematicsException(`Domain requires an Angular project type of "application" in angular.json`);
+    }
+
+    const appName = options.app;
+    const appFolderName = dasherize(appName);
+    const appModulePath = `apps/${appFolderName}/src/app/app.module.ts`;
+
+    // Checking if appModulePath exists
+    if (!host.exists(appModulePath)) {
+      throw new SchematicsException(`Specified app ${options.app} does not exist: ${appModulePath} expected!`);
+    }
+
     const domainName = dasherize(options.name);
     const domainFolderName = domainName;
     const domainPath = `libs/${domainFolderName}/domain/src/lib`;
@@ -29,14 +59,6 @@ export default function (options: DomainOptions): Rule {
 
         return tree;
       };
-    }
-
-    const appName = options.app ?? getWorkspace(host)?.defaultProject;
-    const appFolderName = dasherize(appName);
-    const appModulePath = `apps/${appFolderName}/src/app/app.module.ts`;
-
-    if (!host.exists(appModulePath)) {
-      throw new SchematicsException(`Specified app ${options.app} does not exist: ${appModulePath} expected!`);
     }
 
     return chain([

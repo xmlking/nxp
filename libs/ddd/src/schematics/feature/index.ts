@@ -1,5 +1,5 @@
 import { normalize } from '@angular-devkit/core';
-import { dasherize } from '@angular-devkit/core/src/utils/strings';
+import { capitalize, dasherize } from '@angular-devkit/core/src/utils/strings';
 import {
   chain,
   externalSchematic,
@@ -10,10 +10,34 @@ import {
   SchematicsException,
   Tree,
 } from '@angular-devkit/schematics';
+import { getWorkspace } from '@schematics/angular/utility/config';
 import { FeatureOptions } from './schema';
 
 export default function (options: FeatureOptions): Rule {
   return (host: Tree) => {
+    const workspace = getWorkspace(host);
+    const domainProjectName = dasherize(
+      `${options.domain}Shell${options.platform ? capitalize(options.platform) : ''}`
+    );
+    const domainShellProjectName = dasherize(
+      `${options.domain}Domain${options.platform ? capitalize(options.platform) : ''}`
+    );
+
+    // Validating domain name
+    const domainProject = workspace.projects[domainProjectName];
+    if (!domainProject) {
+      throw new SchematicsException('The specified domain is not defined in this workspace');
+    } else if (domainProject.projectType !== 'library') {
+      throw new SchematicsException(`${domainProjectName} should be Angular project type of "library" in angular.json`);
+    }
+
+    const domainShellProject = workspace.projects[domainShellProjectName];
+    if (!domainShellProject) {
+      throw new SchematicsException('The specified domain shell is not defined in this workspace');
+    } else if (domainShellProject.projectType !== 'library') {
+      `${domainShellProjectName} should be Angular project type of "library" in angular.json`;
+    }
+
     const domainName = dasherize(options.domain);
     const domainFolderName = domainName;
 

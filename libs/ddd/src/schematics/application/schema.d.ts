@@ -13,7 +13,7 @@ export interface ApplicationOptions {
   /**
    * runtime platform
    */
-  platform?: 'web' | 'mobile' | 'desktop' | 'node' | 'universal';
+  platform?: "web" | "mobile" | "desktop" | "node" | "universal";
   /**
    * Backend project that provides data to this application. This sets up proxy.config.json.
    */

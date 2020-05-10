@@ -34,9 +34,10 @@ ng update --all  --allow-dirty --force
 # add nx plugins (schematics)
 ng add @nrwl/angular --defaults
 ng add @xmlking/nxp-ddd
-# (or) for local plugin development
+
+# (Optional) In development, here is what I do to use without publishing to NPM:
 yarn build:ddd # in nxp project
-ng add ~/Developer/Work/SPA/nxp/dist/libs/ddd
+ng add ~/Developer/Work/SPA/nxp/dist/libs/ddd # in target project
 
 # add web-app. optional flags: --platform <web/mobile/desktop/node>
 ng g @xmlking/nxp-ddd:app yeti
@@ -59,7 +60,7 @@ nx g @xmlking/nxp-ddd:entity user --domain booking
 nx g @xmlking/nxp-ddd:entity seat --domain boarding
 ```
 
-### Post action
+### Post-Setup Actions
 
 After generation all modules, you might have to remove `pathMatch: 'full'` and adjust your routes in some module's Router config .<br/>
 Optionally add `<router-outlet></router-outlet>` in shell component's HTML

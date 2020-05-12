@@ -21,6 +21,6 @@ export interface DomainOptions {
   /**
    * runtime platform
    */
-  platform?: "web" | "mobile" | "desktop" | "node" | "universal";
+  platform?: 'web' | 'mobile' | 'desktop' | 'node' | 'universal';
   [k: string]: any;
 }

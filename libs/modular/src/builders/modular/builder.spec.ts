@@ -2,9 +2,9 @@ import { Architect } from '@angular-devkit/architect';
 import { TestingArchitectHost } from '@angular-devkit/architect/testing';
 import { schema } from '@angular-devkit/core';
 import { join } from 'path';
-import { DddBuilderSchema } from './schema';
+import { ModularBuilderSchema } from './schema';
 
-const options: DddBuilderSchema = {};
+const options: ModularBuilderSchema = {};
 
 describe('Command Runner Builder', () => {
   let architect: Architect;
@@ -24,7 +24,7 @@ describe('Command Runner Builder', () => {
 
   it('can run', async () => {
     // A "run" can have multiple outputs, and contains progress information.
-    const run = await architect.scheduleBuilder('@xmlking/nxp-ddd:build', options);
+    const run = await architect.scheduleBuilder('@xmlking/nxp-modular:build', options);
     // The "result" member (of type BuilderOutput) is the next output.
     const output = await run.result;
 

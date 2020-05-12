@@ -11,6 +11,9 @@ lerna init --independent
 yarn config set workspaces-experimental true
 # adding new plugin
 nx g @nrwl/nx-plugin:plugin [pluginName]
+# example:
+nx g @nrwl/nx-plugin:plugin ddd -d
+nx g @nrwl/nx-plugin:plugin modular -d
 ```
 
 When you change any schematics's `schema.json`, run the following command to generate `schema.d.ts`

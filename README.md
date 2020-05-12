@@ -15,10 +15,10 @@ Plugins for [Nx](https://nx.dev) Workspace.
 
 ## Projects
 
-| Status | Project                    | Description                                                   |
-| :----: | -------------------------- | ------------------------------------------------------------- |
-|   🗄    | [DDD](./libs/ddd/)         | Nx plugin for structuring a monorepo with domains and layers. |
-|   📦   | [Modular](./libs/modular/) | Nx plugin for for structuring a monorepo into grouped Modules |
+| Status | Project                    | Description                                                    |
+| :----: | -------------------------- | -------------------------------------------------------------- |
+|   🗄    | [DDD](./libs/ddd/)         | Nx plugin for structuring a monorepo with domains and layers.  |
+|   📦   | [Modular](./libs/modular/) | Nx plugin for for structuring a monorepo into grouped Modules. |
 
 ## Documentation
 

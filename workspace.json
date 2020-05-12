@@ -12,10 +12,7 @@
           "options": {
             "linter": "eslint",
             "config": "libs/ddd/.eslintrc",
-            "tsConfig": [
-              "libs/ddd/tsconfig.lib.json",
-              "libs/ddd/tsconfig.spec.json"
-            ],
+            "tsConfig": ["libs/ddd/tsconfig.lib.json", "libs/ddd/tsconfig.spec.json"],
             "exclude": ["**/node_modules/**", "!libs/ddd/**"]
           }
         },
@@ -69,6 +66,75 @@
             "pluginOutputPath": "dist/libs/ddd",
             "jestConfig": "apps/ddd-e2e/jest.config.js",
             "tsSpecConfig": "apps/ddd-e2e/tsconfig.spec.json"
+          }
+        }
+      }
+    },
+    "modular": {
+      "root": "libs/modular",
+      "sourceRoot": "libs/modular/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "config": "libs/modular/.eslintrc",
+            "tsConfig": ["libs/modular/tsconfig.lib.json", "libs/modular/tsconfig.spec.json"],
+            "exclude": ["**/node_modules/**", "!libs/modular/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/modular/jest.config.js",
+            "tsConfig": "libs/modular/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "builder": "@nrwl/node:package",
+          "options": {
+            "outputPath": "dist/libs/modular",
+            "tsConfig": "libs/modular/tsconfig.lib.json",
+            "packageJson": "libs/modular/package.json",
+            "main": "libs/modular/src/index.ts",
+            "assets": [
+              "libs/modular/*.md",
+              {
+                "input": "./libs/modular/src",
+                "glob": "**/*.!(ts)",
+                "output": "./src"
+              },
+              {
+                "input": "./libs/modular",
+                "glob": "collection.json",
+                "output": "."
+              },
+              {
+                "input": "./libs/modular",
+                "glob": "builders.json",
+                "output": "."
+              }
+            ]
+          }
+        }
+      }
+    },
+    "modular-e2e": {
+      "projectType": "application",
+      "root": "apps/modular-e2e",
+      "sourceRoot": "apps/modular-e2e/src",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/nx-plugin:e2e",
+          "options": {
+            "target": "modular:build",
+            "npmPackageName": "@xmlking/modular",
+            "pluginOutputPath": "dist/libs/modular",
+            "jestConfig": "apps/modular-e2e/jest.config.js",
+            "tsSpecConfig": "apps/modular-e2e/tsconfig.spec.json"
           }
         }
       }

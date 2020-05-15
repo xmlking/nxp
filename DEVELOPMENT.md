@@ -14,6 +14,13 @@ nx g @nrwl/nx-plugin:plugin [pluginName]
 # example:
 nx g @nrwl/nx-plugin:plugin ddd -d
 nx g @nrwl/nx-plugin:plugin begetter -d
+
+# to add new builder to your plugin
+nx g @nrwl/nx-plugin:builder my-builder --project=begetter --description='My builder description' -d
+# to add new schematic to your plugin
+nx g @nrwl/nx-plugin:schematic my-schematic --project=begetter --description='My schematic description'  -d
+# if you want to add migrations later
+nx g @nrwl/nx-plugin:migration --project=begetter --version=1.2.3 -d
 ```
 
 When you change any schematics's `schema.json`, run the following command to generate `schema.d.ts`

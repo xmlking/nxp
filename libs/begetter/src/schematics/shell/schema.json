@@ -1,19 +1,19 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "id": "feature-options",
+  "id": "shell-options",
   "type": "object",
   "properties": {
     "name": {
       "type": "string",
-      "description": "Library name",
+      "description": "Domain name",
       "$default": {
         "$source": "argv",
         "index": 0
       }
     },
-    "domain": {
+    "app": {
       "type": "string",
-      "description": "Domain name"
+      "description": "app name"
     },
     "lazy": {
       "type": "boolean",
@@ -25,11 +25,7 @@
       "alias": "p",
       "type": "string",
       "enum": ["web", "mobile", "desktop", "nest"]
-    },
-    "entity": {
-      "type": "string",
-      "description": "Optional entity to create for this feature"
     }
   },
-  "required": ["name", "domain"]
+  "required": ["name"]
 }

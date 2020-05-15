@@ -5,18 +5,22 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-export interface ApplicationOptions {
+export interface ShellOptions {
   /**
-   * The name of the application.
+   * Domain name
    */
   name: string;
+  /**
+   * app name
+   */
+  app?: string;
+  /**
+   * Is this feature module lazy loaded?
+   */
+  lazy?: boolean;
   /**
    * runtime platform
    */
   platform?: 'web' | 'mobile' | 'desktop' | 'nest';
-  /**
-   * Backend project that provides data to this application. This sets up proxy.config.json.
-   */
-  backendProject?: string;
   [k: string]: any;
 }

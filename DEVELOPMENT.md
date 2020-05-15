@@ -13,7 +13,7 @@ yarn config set workspaces-experimental true
 nx g @nrwl/nx-plugin:plugin [pluginName]
 # example:
 nx g @nrwl/nx-plugin:plugin ddd -d
-nx g @nrwl/nx-plugin:plugin modular -d
+nx g @nrwl/nx-plugin:plugin begetter -d
 ```
 
 When you change any schematics's `schema.json`, run the following command to generate `schema.d.ts`

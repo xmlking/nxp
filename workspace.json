@@ -70,9 +70,9 @@
         }
       }
     },
-    "modular": {
-      "root": "libs/modular",
-      "sourceRoot": "libs/modular/src",
+    "begetter": {
+      "root": "libs/begetter",
+      "sourceRoot": "libs/begetter/src",
       "projectType": "library",
       "schematics": {},
       "architect": {
@@ -80,40 +80,40 @@
           "builder": "@nrwl/linter:lint",
           "options": {
             "linter": "eslint",
-            "config": "libs/modular/.eslintrc",
-            "tsConfig": ["libs/modular/tsconfig.lib.json", "libs/modular/tsconfig.spec.json"],
-            "exclude": ["**/node_modules/**", "!libs/modular/**"]
+            "config": "libs/begetter/.eslintrc",
+            "tsConfig": ["libs/begetter/tsconfig.lib.json", "libs/begetter/tsconfig.spec.json"],
+            "exclude": ["**/node_modules/**", "!libs/begetter/**"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/modular/jest.config.js",
-            "tsConfig": "libs/modular/tsconfig.spec.json",
+            "jestConfig": "libs/begetter/jest.config.js",
+            "tsConfig": "libs/begetter/tsconfig.spec.json",
             "passWithNoTests": true
           }
         },
         "build": {
           "builder": "@nrwl/node:package",
           "options": {
-            "outputPath": "dist/libs/modular",
-            "tsConfig": "libs/modular/tsconfig.lib.json",
-            "packageJson": "libs/modular/package.json",
-            "main": "libs/modular/src/index.ts",
+            "outputPath": "dist/libs/begetter",
+            "tsConfig": "libs/begetter/tsconfig.lib.json",
+            "packageJson": "libs/begetter/package.json",
+            "main": "libs/begetter/src/index.ts",
             "assets": [
-              "libs/modular/*.md",
+              "libs/begetter/*.md",
               {
-                "input": "./libs/modular/src",
+                "input": "./libs/begetter/src",
                 "glob": "**/*.!(ts)",
                 "output": "./src"
               },
               {
-                "input": "./libs/modular",
+                "input": "./libs/begetter",
                 "glob": "collection.json",
                 "output": "."
               },
               {
-                "input": "./libs/modular",
+                "input": "./libs/begetter",
                 "glob": "builders.json",
                 "output": "."
               }
@@ -122,19 +122,19 @@
         }
       }
     },
-    "modular-e2e": {
+    "begetter-e2e": {
       "projectType": "application",
-      "root": "apps/modular-e2e",
-      "sourceRoot": "apps/modular-e2e/src",
+      "root": "apps/begetter-e2e",
+      "sourceRoot": "apps/begetter-e2e/src",
       "architect": {
         "e2e": {
           "builder": "@nrwl/nx-plugin:e2e",
           "options": {
-            "target": "modular:build",
-            "npmPackageName": "@xmlking/modular",
-            "pluginOutputPath": "dist/libs/modular",
-            "jestConfig": "apps/modular-e2e/jest.config.js",
-            "tsSpecConfig": "apps/modular-e2e/tsconfig.spec.json"
+            "target": "begetter:build",
+            "npmPackageName": "@xmlking/begetter",
+            "pluginOutputPath": "dist/libs/begetter",
+            "jestConfig": "apps/begetter-e2e/jest.config.js",
+            "tsSpecConfig": "apps/begetter-e2e/tsconfig.spec.json"
           }
         }
       }

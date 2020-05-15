@@ -1,0 +1,10 @@
+{
+  "$schema": "../../node_modules/@angular-devkit/architect/src/builders-schema.json",
+  "builders": {
+    "build": {
+      "implementation": "./src/builders/begetter/builder",
+      "schema": "./src/builders/begetter/schema.json",
+      "description": "begetter builder"
+    }
+  }
+}

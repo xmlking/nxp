@@ -33,13 +33,13 @@
         "ddd"
       ]
     },
-    "modular": {
+    "begetter": {
       "tags": []
     },
-    "modular-e2e": {
+    "begetter-e2e": {
       "tags": [],
       "implicitDependencies": [
-        "modular"
+        "begetter"
       ]
     }
   }

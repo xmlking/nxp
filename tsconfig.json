@@ -24,8 +24,8 @@
       "@xmlking/nxp-ddd": [
         "libs/ddd/src/index.ts"
       ],
-      "@xmlking/nxp-modular": [
-        "libs/modular/src/index.ts"
+      "@xmlking/nxp-begetter": [
+        "libs/begetter/src/index.ts"
       ]
     }
   },

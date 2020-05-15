@@ -15,11 +15,13 @@ Plugins for [Nx](https://nx.dev) Workspace.
 
 ## Projects
 
-| Status | Project                    | Description                                                    |
-| :----: | -------------------------- | -------------------------------------------------------------- |
-|   🗄    | [DDD](./libs/ddd/)         | Nx plugin for structuring a monorepo with domains and layers.  |
-|   📦   | [Modular](./libs/modular/) | Nx plugin for for structuring a monorepo into grouped Modules. |
+| Status | Project                      | Description                                                                |
+| :----: | ---------------------------- | -------------------------------------------------------------------------- |
+|   📦   | [DDD](./libs/ddd/)           | Nx plugin for structuring nx monorepo with domains and layers.             |
+|   🗄    | [Begetter](./libs/begetter/) | Nx plugin for grouping nx workspace lib modules based on domain and usage. |
 
 ## Documentation
 
 - Dev [Docs](DEVELOPMENT.md)
+- [Shell Library patterns with Nx and Monorepo Architectures](https://indepth.dev/the-shell-library-patterns-with-nx-and-monorepo-architectures/)
+- [Tiny Angular application projects in Nx workspaces](https://indepth.dev/tiny-angular-application-projects-in-nx-workspaces/)
